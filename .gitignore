@@ -1,7 +1,5 @@
-Release
-Debug
-*.user
+/Windows/lib/x64/Debug
 /Windows/TestEnv
-/Windows/prj/YZOSG.v12.suo
-/Windows/lib/x64/3rdParty/OpenSceneGraph-3.2.1
-/Windows/prj/YZOSG.sdf
+/Windows/bin/x64/Debug
+/Windows/lib/x64/Release
+*.user
