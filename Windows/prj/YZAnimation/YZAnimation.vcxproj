@@ -1,0 +1,220 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{419F86A5-E070-4568-9E0D-C0BDCE8CDE97}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>AnimationEditor</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)..\..\..\bin\windows\$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)..\bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)..\obj\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)..\bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)..\obj\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <PostBuildEventUseInBuild>true</PostBuildEventUseInBuild>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;ANIMATIONEDITOR_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(SolutionDir)\..\..\..\inc\common\3rdParty\libpng-1.2.37;$(SolutionDir)\..\..\..\inc\common\3rdParty\OpenSceneGraph-3.3.1\include;$(SolutionDir)\..\..\..\inc\common\ModelViewer;$(SolutionDir)\..\..\..\inc\common\3rdParty\zlib-1.2.8;$(SolutionDir)\..\..\..\inc\common\ModelViewer\win;$(SolutionDir)\..\..\..\inc\common\3rdParty\boost_1_56_0</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)\..\..\..\lib\windows\x64\3rdParty\OpenSceneGraph-3.3.1;$(SolutionDir)\..\..\..\lib\windows\x64\3rdParty\boost_1_56_0\stage\lib</AdditionalLibraryDirectories>
+      <OutputFile>$(SolutionDir)..\..\..\bin\windows\$(Platform)\$(Configuration)\$(TargetName)$(TargetExt)</OutputFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level4</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>YIZHU_API_DEFINE;WIN32;_DEBUG;_WINDOWS;_USRDLL;ANIMATIONEDITOR_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(OSG_ROOT)\x64\include;$(ProjectDir)..\..\inc\3rdParty\libpng-1.2.37;$(ProjectDir)..\..\inc\3rdParty\zlib-1.2.8;$(ProjectDir)..\..\..\OSG\inc\YZModelCore;$(ProjectDir)..\..\..\OSG\inc\YZAnimation;$(ProjectDir)..\..\..\OSG\inc\YZGraphics;$(ProjectDir)..\..\..\OSG\inc\public</AdditionalIncludeDirectories>
+      <BrowseInformation>false</BrowseInformation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(OSG_ROOT)\x64\lib</AdditionalLibraryDirectories>
+      <OutputFile>$(SolutionDir)..\bin\$(Platform)\$(Configuration)\$(TargetName)$(TargetExt)</OutputFile>
+      <AdditionalDependencies>OpenThreadsd.lib;osgd.lib;osgDBd.lib;osgManipulatord.lib;osgAnimationd.lib;osgUtild.lib;osgGAd.lib;osgViewerd.lib;osgTextd.lib;opengl32.lib;$(SolutionDir)..\lib\x64\3rdparty\libpng-1.2.37\Debug\libpng14d.lib;$(SolutionDir)..\lib\x64\3rdparty\zlib-1.2.8\Debug\zlibd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ImportLibrary>$(SolutionDir)..\lib\$(Platform)\$(Configuration)\$(TargetName).lib</ImportLibrary>
+      <EntryPointSymbol>
+      </EntryPointSymbol>
+    </Link>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
+    <PostBuildEvent>
+      <Command>copy $(TargetPath) $(YZ_PC)\bin\x64_vc12_unicode_debug\$(TargetFileName)
+copy $(OutDir)$(TargetName).pdb $(YZ_PC)\bin\x64_vc12_unicode_debug\$(TargetName).pdb
+copy $(SolutionDir)..\lib\$(Platform)\$(Configuration)\$(TargetName).lib $(YZ_PC)\lib\x64_vc12_unicode_debug\$(TargetName).lib</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>生成后将输出拷贝到测试环境。</Message>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;ANIMATIONEDITOR_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>YIZHU_API_DEFINE;WIN32;NDEBUG;_WINDOWS;_USRDLL;ANIMATIONEDITOR_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(BOOST_ROOT);$(OSG_ROOT)\x64\include;$(SolutionDir)..\inc\3rdParty\libpng-1.2.37;$(SolutionDir)..\inc\3rdParty\zlib-1.2.8;$(SolutionDir)..\..\OSG\inc\YZModelCore;$(SolutionDir)..\..\OSG\inc\YZAnimation;$(SolutionDir)..\..\OSG\inc\YZGraphics;$(SolutionDir)..\..\OSG\inc\public</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>OpenThreads.lib;osg.lib;osgDB.lib;osgManipulator.lib;osgAnimation.lib;osgUtil.lib;osgGA.lib;osgViewer.lib;osgText.lib;opengl32.lib;$(SolutionDir)..\lib\x64\3rdparty\libpng-1.2.37\Release\libpng14.lib;$(SolutionDir)..\lib\x64\3rdparty\zlib-1.2.8\Release\zlib.lib;$(SolutionDir)..\lib\x64\3rdparty\log4cplus\Release\log4cplusU.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(SolutionDir)..\bin\$(Platform)\$(Configuration)\$(TargetName)$(TargetExt)</OutputFile>
+      <AdditionalLibraryDirectories>$(OSG_ROOT)\x64\lib;$(SolutionDir)\..\..\..\lib\windows\$(Platform);$(BOOST_ROOT)\bin\vc12_x64dll\lib</AdditionalLibraryDirectories>
+      <ImportLibrary>$(SolutionDir)..\lib\$(Platform)\$(Configuration)\$(TargetName).lib</ImportLibrary>
+      <EntryPointSymbol>
+      </EntryPointSymbol>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy $(TargetPath) $(YZ_PC)\bin\x64_vc12_unicode_release\$(TargetFileName)
+copy $(SolutionDir)..\lib\$(Platform)\$(Configuration)\$(TargetName).lib $(YZ_PC)\lib\x64_vc12_unicode_release\$(TargetName).lib</Command>
+      <Message>生成后将输出拷贝到测试环境。</Message>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\OSG\inc\YZAnimation\Animations.h" />
+    <ClInclude Include="..\..\..\OSG\inc\YZAnimation\AnimationChain.h" />
+    <ClInclude Include="..\..\..\OSG\inc\YZAnimation\AnimationEditor.h" />
+    <ClInclude Include="..\..\..\OSG\inc\YZAnimation\AnimationFactory.h" />
+    <ClInclude Include="..\..\..\OSG\inc\YZAnimation\CameraAnimationPath.h" />
+    <ClInclude Include="..\..\..\OSG\inc\YZAnimation\CreatePointManipulator.h" />
+    <ClInclude Include="..\..\..\OSG\inc\YZAnimation\DraggerManipulator.h" />
+    <ClInclude Include="..\..\..\OSG\inc\YZAnimation\DragSelectionManipulator.h" />
+    <ClInclude Include="..\..\..\OSG\inc\YZAnimation\FixedPathAnimation.h" />
+    <ClInclude Include="..\..\..\OSG\inc\YZAnimation\IMouseHandler.h" />
+    <ClInclude Include="..\..\..\OSG\inc\YZAnimation\KeyFrameAnimation.h" />
+    <ClInclude Include="..\..\..\OSG\inc\YZAnimation\MouseManipulatorBase.h" />
+    <ClInclude Include="..\..\..\OSG\inc\YZAnimation\MouseManipulatorContainer.h" />
+    <ClInclude Include="..\..\..\OSG\inc\public\IAnimationFactory.h" />
+    <ClInclude Include="..\..\..\OSG\inc\public\IAnimations.h" />
+    <ClInclude Include="..\..\..\OSG\inc\public\ICameraAnimationPath.h" />
+    <ClInclude Include="..\..\..\OSG\inc\public\IKeyFrameAnimation.h" />
+    <ClInclude Include="..\..\..\OSG\inc\YZGraphics\Point.h" />
+    <ClInclude Include="..\..\..\OSG\inc\YZGraphics\Rect.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\OSG\src\YZAnimation\AnimationFactory.cpp" />
+    <ClCompile Include="..\..\..\OSG\src\YZAnimation\Animations.cpp" />
+    <ClCompile Include="..\..\..\OSG\src\YZAnimation\AnimationEditor.cpp" />
+    <ClCompile Include="..\..\..\OSG\src\YZAnimation\CameraAnimationPath.cpp" />
+    <ClCompile Include="..\..\..\OSG\src\YZAnimation\FixedPathAnimation.cpp" />
+    <ClCompile Include="..\..\..\OSG\src\YZAnimation\KeyFrameAnimation.cpp" />
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="test.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

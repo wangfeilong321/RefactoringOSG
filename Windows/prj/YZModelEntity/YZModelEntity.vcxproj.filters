@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Interface">
+      <UniqueIdentifier>{9cdf805f-8c5c-4086-8a98-b23a767f756a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ModelEntity">
+      <UniqueIdentifier>{4b8d4de1-fb09-40ab-8111-fd85a8b3f3bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ModelLoader">
+      <UniqueIdentifier>{12474dc9-0e41-4230-9f4e-3355cbe09ab0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ZoomEntityModel">
+      <UniqueIdentifier>{af3afb2b-b998-46cd-8e55-83b3a6be834c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NodeController">
+      <UniqueIdentifier>{17b6a419-fa1c-4a30-aa71-3b421e60ce3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ProgressInfo">
+      <UniqueIdentifier>{6f8bcd77-cae6-421f-b2a8-489bcd4ce616}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="to.be.removed">
+      <UniqueIdentifier>{f299fef1-f1dd-448f-8e54-b286b36c5514}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;cxx;c;def</Extensions>
+      <ParseFiles>true</ParseFiles>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h</Extensions>
+      <ParseFiles>true</ParseFiles>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\OSG\src\YZModelEntity\ProgressInfo.cpp">
+      <Filter>ProgressInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\OSG\src\YZModelEntity\ModelEntityFactory.cpp">
+      <Filter>ModelEntity</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\OSG\src\YZModelEntity\NodeEntityController.cpp">
+      <Filter>NodeController</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\OSG\src\YZModelEntity\EntityHelper.cpp">
+      <Filter>to.be.removed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\OSG\src\YZModelEntity\ModelLoader.cpp">
+      <Filter>ModelLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\OSG\src\YZModelEntity\NodeControllerWrapper.cpp">
+      <Filter>NodeController</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\OSG\src\YZModelEntity\YZModelEntityInternal.cpp">
+      <Filter>ModelEntity</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\OSG\src\YZModelEntity\YZModelEntityModule.cpp">
+      <Filter>ModelEntity</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\OSG\src\YZModelEntity\ConstructKey.cpp" />
+    <ClCompile Include="..\..\..\OSG\src\YZModelEntity\EntitySharedData.cpp" />
+    <ClCompile Include="..\..\..\OSG\src\YZModelEntity\ZoomModelWrapper.cpp">
+      <Filter>ZoomEntityModel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\OSG\src\YZModelEntity\ZoomEntityModel.cpp">
+      <Filter>ZoomEntityModel</Filter>
+    </ClCompile>
+    <ClCompile Include="dllmain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\OSG\inc\YZModelEntity\ProgressInfo.h">
+      <Filter>ProgressInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\OSG\inc\YZModelEntity\NodeEntityController.h">
+      <Filter>NodeController</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\OSG\inc\YZModelEntity\NodeControllerWrapper.h">
+      <Filter>NodeController</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\OSG\inc\YZModelEntity\YZModelEntityModule.h">
+      <Filter>ModelEntity</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\OSG\inc\YZModelEntity\YZModelEntityInternal.h">
+      <Filter>ModelEntity</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\OSG\inc\YZModelEntity\EntityHelper.h">
+      <Filter>to.be.removed</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\OSG\inc\YZModelEntity\ModelEntityFactory.h">
+      <Filter>ModelEntity</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\OSG\inc\YZModelEntity\ModelLoader.h">
+      <Filter>ModelLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\OSG\inc\YZModelEntity\ZoomEntityModel.h">
+      <Filter>ZoomEntityModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\OSG\inc\YZModelEntity\ZoomModelWrapper.h">
+      <Filter>ZoomEntityModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\OSG\inc\YZModelEntity\EntitySharedData.h" />
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\OSG\inc\common\IModelEntityFactory.h">
+      <Filter>ModelEntity</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\OSG\inc\public\IModelEntity.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\OSG\inc\public\IModelLoader.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\OSG\inc\public\INodeEntityController.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\OSG\inc\public\IProgressInfo.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\OSG\inc\public\IZoomEntityModel.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\OSG\inc\public\ModelViewer\ConstructKey.h" />
+  </ItemGroup>
+</Project>

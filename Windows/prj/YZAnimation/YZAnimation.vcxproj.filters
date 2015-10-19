@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="头文件\Animation">
+      <UniqueIdentifier>{5d5e1c02-0d89-4000-a356-a5b2e44bacbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\GraphicsStructure">
+      <UniqueIdentifier>{f7eaec2c-ca94-40ee-9747-d23ff5d611f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Animation">
+      <UniqueIdentifier>{02c7474c-788f-4fac-8a2a-40450ded40c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Dragger">
+      <UniqueIdentifier>{5e993900-2d95-414b-8703-1ce680882795}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Manipulator">
+      <UniqueIdentifier>{b42c79d5-77e0-4c51-8544-a68f6e162650}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\test">
+      <UniqueIdentifier>{aeb0fb91-aaaa-45ea-9c9f-d4408ee6e84b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Animation\ExportInterface">
+      <UniqueIdentifier>{20091d47-a82b-4546-8fd4-3b348d88afa8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\OSG\inc\YZAnimation\MouseManipulatorContainer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\OSG\inc\YZAnimation\IMouseHandler.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\OSG\inc\YZAnimation\FixedPathAnimation.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\OSG\inc\YZAnimation\MouseManipulatorBase.h">
+      <Filter>头文件\Manipulator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\OSG\inc\YZAnimation\CreatePointManipulator.h">
+      <Filter>头文件\Manipulator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\OSG\inc\YZAnimation\DragSelectionManipulator.h">
+      <Filter>头文件\Manipulator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\OSG\inc\YZAnimation\DraggerManipulator.h">
+      <Filter>头文件\Manipulator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\OSG\inc\YZGraphics\Rect.h">
+      <Filter>头文件\GraphicsStructure</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\OSG\inc\YZGraphics\Point.h">
+      <Filter>头文件\GraphicsStructure</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\OSG\inc\YZAnimation\KeyFrameAnimation.h">
+      <Filter>头文件\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\OSG\inc\YZAnimation\CameraAnimationPath.h">
+      <Filter>头文件\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\OSG\inc\YZAnimation\Animations.h">
+      <Filter>头文件\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\OSG\inc\YZAnimation\AnimationFactory.h">
+      <Filter>头文件\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\OSG\inc\YZAnimation\AnimationEditor.h">
+      <Filter>头文件\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\OSG\inc\YZAnimation\AnimationChain.h">
+      <Filter>头文件\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\OSG\inc\public\IKeyFrameAnimation.h">
+      <Filter>头文件\Animation\ExportInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\OSG\inc\public\ICameraAnimationPath.h">
+      <Filter>头文件\Animation\ExportInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\OSG\inc\public\IAnimations.h">
+      <Filter>头文件\Animation\ExportInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\OSG\inc\public\IAnimationFactory.h">
+      <Filter>头文件\Animation\ExportInterface</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="test.cpp">
+      <Filter>源文件\test</Filter>
+    </ClCompile>
+    <ClCompile Include="dllmain.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\OSG\src\YZAnimation\FixedPathAnimation.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\OSG\src\YZAnimation\KeyFrameAnimation.cpp">
+      <Filter>源文件\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\OSG\src\YZAnimation\CameraAnimationPath.cpp">
+      <Filter>源文件\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\OSG\src\YZAnimation\Animations.cpp">
+      <Filter>源文件\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\OSG\src\YZAnimation\AnimationEditor.cpp">
+      <Filter>源文件\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\OSG\src\YZAnimation\AnimationFactory.cpp">
+      <Filter>源文件\Animation</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
