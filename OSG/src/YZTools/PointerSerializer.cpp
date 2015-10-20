@@ -17,12 +17,12 @@ std::string PointerSerializer::Serialize(void* ptr)
 {
 	if (!ptr)
 		return "";
-	return std::to_string((int)ptr);
+	return std::to_string((long)ptr);
 }
 
 //template <class T>
 //T* PointerSerializer::Deserialize(int ptr)
-void* PointerSerializer::Deserialize(int ptr)
+void* PointerSerializer::Deserialize(long ptr)
 {
 	void * parsePtr = nullptr;
 	if (ptr <= 0)

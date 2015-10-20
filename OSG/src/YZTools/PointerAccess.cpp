@@ -47,9 +47,9 @@ void PtrTestHandler(int nSig)
 		longjmp(g_PtrTestJmpBuf, 1);
 }
 
-BOOL IsBadReadPtr(void* lp, UINT cb)
+BOOL IsBadReadPtr(void* lp, size_t cb)
 {
-	UINT i;
+	size_t i;
 	BYTE b1;
 	BOOL bRet = TRUE;
 	void(/*__cdecl*/* pfnPrevHandler)(int);

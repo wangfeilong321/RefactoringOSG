@@ -22,7 +22,7 @@ BOOL IsBadWritePtr(const void *lp, size_t ucb);
 
 void /*__cdecl*/ PtrTestHandler(int nSig);
 
-BOOL IsBadReadPtr(void* lp, UINT cb);
+BOOL IsBadReadPtr(void* lp, size_t cb);
 
 #endif 
 

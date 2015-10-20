@@ -7,7 +7,7 @@ public:
 	static std::string Serialize(void* ptr);
 	//template <class T>
 	//static T* Deserialize(int ptr, size_t size);
-	static void* Deserialize(int ptr);
+	static void* Deserialize(long ptr);
 protected:
 private:
 };

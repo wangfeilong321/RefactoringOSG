@@ -314,5 +314,6 @@ void bimWorld::ZoomModel::zoom(double dy)
 	}
 
 	manip->zoomModel(dy);
+	m_host->_RenderingThreads()->updateSeveralTimes(1);
 }
 
