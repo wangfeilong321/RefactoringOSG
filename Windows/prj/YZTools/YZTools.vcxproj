@@ -231,7 +231,7 @@ copy $(SolutionDir)..\lib\$(Platform)\$(Configuration)\$(TargetName).lib $(Solut
     <ClInclude Include="..\..\..\OSG\inc\public\CharExt.h" />
     <ClInclude Include="..\..\..\OSG\inc\public\Event.h" />
     <ClInclude Include="..\..\..\OSG\inc\YZTools\EventArgs.h" />
-    <ClInclude Include="..\..\..\OSG\inc\YZTools\InstanceFunction.h" />
+    <ClInclude Include="..\..\..\OSG\inc\public\InstanceFunction.h" />
     <ClInclude Include="..\..\..\OSG\inc\public\MapExt.h" />
     <ClInclude Include="..\..\..\OSG\inc\public\MathExt.h" />
     <ClInclude Include="..\..\..\OSG\inc\public\PointerAccess.h" />

@@ -40,9 +40,6 @@
     <ClInclude Include="..\..\..\OSG\inc\YZTools\EventArgs.h">
       <Filter>Header Files\event</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\OSG\inc\YZTools\InstanceFunction.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -78,6 +75,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\OSG\inc\public\VectorExt.h">
       <Filter>Header Files\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\OSG\inc\public\InstanceFunction.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
