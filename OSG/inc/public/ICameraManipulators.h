@@ -44,6 +44,8 @@ namespace bimWorld
 
 		virtual void setModelCenter(void* node) = 0;
 
+		virtual void setModelCenterKeepViewPoint(void* node) = 0;
+
 		virtual void bindKeyUpEvent(bimWorld::KeySymbol key, bimWorld::CameraOperationTypes operation) = 0;
 
 		virtual void bindKeyDownEvent(bimWorld::KeySymbol key, bimWorld::CameraOperationTypes operation) = 0;

@@ -9,7 +9,7 @@ static void handler(int ignored)
 	longjmp(hndbuf, 1);
 }
 
-static BOOL IsBadWritePtr(const void *lp, size_t ucb)
+BOOL IsBadWritePtr(const void *lp, size_t ucb)
 {
 	struct sigaction act;
 	struct sigaction oact;

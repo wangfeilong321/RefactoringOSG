@@ -34,6 +34,7 @@
     <ClInclude Include="..\..\..\OSG\inc\public\IModelViewer.h" />
     <ClInclude Include="..\..\..\OSG\inc\public\ISelectionController.h" />
     <ClInclude Include="..\..\..\OSG\inc\public\ModelViewer.h" />
+    <ClInclude Include="..\..\..\OSG\inc\public\ModelViewerIOS.h" />
     <ClInclude Include="..\..\..\OSG\inc\YZModelBLL\SelectionController.h" />
     <ClInclude Include="..\..\..\OSG\inc\YZModelBLL\YZModelBLLModule.h" />
     <ClInclude Include="stdafx.h" />
@@ -58,6 +59,9 @@
     <ProjectReference Include="..\YZTools\YZTools.vcxproj">
       <Project>{d0701429-99bf-4fa6-bdb4-5fe2259956a4}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\OSG\src\YZModelBLL\ModelViewerIOS.mm" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{BC3D0C8D-01B1-4760-949E-642DDD976900}</ProjectGuid>

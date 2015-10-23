@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "config.h"
+#include <functional>
 
 namespace util
 {
@@ -15,6 +16,17 @@ namespace util
 			for (auto iter = This.begin(); iter != This.end(); iter++)
 			{
 				if (*iter == value)
+					return true;
+			}
+			return false;
+		}
+
+		template< class T >
+		static bool contains(const std::vector<T>& This, std::function<bool(T)> condition)
+		{
+			for (auto iter = This.begin(); iter != This.end(); iter++)
+			{
+				if (condition(*iter))
 					return true;
 			}
 			return false;

@@ -59,9 +59,9 @@ osg::StateSet* bimWorld::MaterialCallback::getTopStateSet(osg::Node* child)
 	osg::StateSet* state = NULL;
 	auto parents = child->getParents();
 
-	for each (auto parent in parents)
+    for(auto iter = parents.begin(); iter!=parents.end(); iter++)
 	{
-		auto s = parent->getStateSet();
+		auto s = (*iter)->getStateSet();
 		if (s)
 		{
 			state = s;
@@ -69,14 +69,14 @@ osg::StateSet* bimWorld::MaterialCallback::getTopStateSet(osg::Node* child)
 		}
 
 	}
-
-	for each (auto parent in parents)
+    
+    for(auto iter = parents.begin(); iter!=parents.end(); iter++)
 	{
-		if (parent == m_host->_ViewerData()->getModelRoot())
+		if ((*iter) == m_host->_ViewerData()->getModelRoot())
 		{
 			break;
 		}
-		auto s = getTopStateSet(parent);
+		auto s = getTopStateSet((*iter));
 		if (!s)
 		{
 			continue;

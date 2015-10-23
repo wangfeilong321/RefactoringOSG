@@ -17,6 +17,12 @@ void bimWorld::CameraOperation::onMoveBackward(std::chrono::system_clock::time_p
 	double time;
 	if (m_firstMoveBackward)
 	{
+		if (m_host->m_movingRight || m_host->m_movingLeft)
+		{
+			m_lastOnMoveBackwardTime = tick;
+			m_firstMoveBackward = false;
+			return;
+		}
 		time = 1;
 		m_firstMoveBackward = false;
 		m_host->beginPushForward(-getMoveFactor() * 0.5 * time);
@@ -77,6 +83,12 @@ void bimWorld::CameraOperation::onMoveForward(std::chrono::system_clock::time_po
 	double time;
 	if (m_firstMoveForward)
 	{
+		if (m_host->m_movingRight || m_host->m_movingLeft)
+		{
+			m_lastOnMoveForwardTime = tick;
+			m_firstMoveForward = false;
+			return;
+		}
 		time = 1;
 		m_firstMoveForward = false;
 		m_host->beginPushForward(getMoveFactor() * 0.5 * time);
@@ -93,7 +105,7 @@ void bimWorld::CameraOperation::onMoveForward(std::chrono::system_clock::time_po
 float bimWorld::CameraOperation::getZoomDelta(float totalFrame)
 {
 	// minimum distance
-	float minDist = m_host->_minimumDistance;
+	float minDist = m_host->_minimumDistance * 1000;
 	if (m_host->getRelativeFlag(m_host->_minimumDistanceFlagIndex))
 		minDist *= m_host->_modelSize;
 
@@ -117,7 +129,7 @@ void bimWorld::CameraOperation::zoomForward(float delta, float frame)
 void bimWorld::CameraOperation::zoomBackward(float delta, float frame)
 {
 	// minimum distance
-	float minDist = m_host->_minimumDistance;
+	float minDist = m_host->_minimumDistance * 1000;
 	if (m_host->getRelativeFlag(m_host->_minimumDistanceFlagIndex))
 		minDist *= m_host->_modelSize;
 	m_host->_distance = minDist + delta*frame;

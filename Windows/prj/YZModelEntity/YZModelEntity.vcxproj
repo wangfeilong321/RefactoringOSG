@@ -134,7 +134,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(SolutionDir)..\bin\$(Platform)\$(Configuration)\$(ProjectName).dll</OutputFile>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\lib\$(Platform)\$(Configuration);$(OSG_ROOT)\x64\lib;$(YZ_GEO)\lib\x64_vc12_unicode_debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\lib\$(Platform)\$(Configuration);$(OSG_ROOT)\x64\lib;$(YZ_GEO)\..\Windows\lib\x64_vc12_unicode_debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>SqliteWin.lib;opengl32.lib;glu32.lib;OpenThreadsd.lib;osgd.lib;osgDBd.lib;osgManipulatord.lib;osgAnimationd.lib;osgUtild.lib;osgGAd.lib;osgViewerd.lib;osgTextd.lib;$(SolutionDir)..\lib\$(Platform)\$(Configuration)\YZTools.lib;Giraffe.lib;Dragon.lib;Tiger.lib;ModelCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary>$(SolutionDir)..\lib\$(Platform)\$(Configuration)\$(TargetName).lib</ImportLibrary>
@@ -194,7 +194,7 @@ copy $(SolutionDir)..\lib\$(Platform)\$(Configuration)\$(TargetName).lib $(YZ_PC
     <Link>
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(SolutionDir)..\bin\$(Platform)\$(Configuration)\$(ProjectName).dll</OutputFile>
-      <AdditionalLibraryDirectories>$(BOOST_ROOT)\bin\vc12_x64DLL\lib;$(SolutionDir)..\lib\$(Platform)\$(Configuration);$(OSG_ROOT)\x64\lib;$(YZ_GEO)\lib\x64_vc12_unicode_release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(BOOST_ROOT)\bin\vc12_x64DLL\lib;$(SolutionDir)..\lib\$(Platform)\$(Configuration);$(OSG_ROOT)\x64\lib;$(YZ_GEO)\..\Windows\lib\x64_vc12_unicode_release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <AdditionalDependencies>SqliteWin.lib;opengl32.lib;glu32.lib;OpenThreads.lib;osg.lib;osgDB.lib;osgManipulator.lib;osgAnimation.lib;osgUtil.lib;osgGA.lib;osgViewer.lib;osgText.lib;$(SolutionDir)..\lib\$(Platform)\$(Configuration)\YZTools.lib;Giraffe.lib;Dragon.lib;Tiger.lib;ModelCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary>$(SolutionDir)..\lib\$(Platform)\$(Configuration)\$(TargetName).lib</ImportLibrary>

@@ -1,5 +1,5 @@
-#ifndef __MODEL_VIEW_H__
-#define __MODEL_VIEW_H__
+#ifndef __MODEL_VIEWER_H__
+#define __MODEL_VIEWER_H__
 #include "config.h"
 #include "IModelViewer.h"
 
@@ -23,6 +23,7 @@ namespace bimWorld
 		ModelViewer(HWND hwnd);
 #elif Android
 		ModelViewer(int x,int y,int width,int height);
+#elif __APPLE__
 #else
 #endif // _WIN32
 
@@ -92,4 +93,4 @@ namespace bimWorld
 	};
 }
 
-#endif // __MODEL_VIEW_H__
+#endif // __MODEL_VIEWER_H__

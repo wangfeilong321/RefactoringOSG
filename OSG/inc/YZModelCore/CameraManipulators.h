@@ -65,6 +65,9 @@ namespace bimWorld
 
 		virtual void setModelCenter(void* center) override;
 
+		// keep eye.
+		virtual void setModelCenterKeepViewPoint(void* center) override;
+
 		virtual void bindKeyUpEvent(bimWorld::KeySymbol key, bimWorld::CameraOperationTypes operation) override;
 
 		virtual void bindKeyDownEvent(bimWorld::KeySymbol key, bimWorld::CameraOperationTypes operation) override;

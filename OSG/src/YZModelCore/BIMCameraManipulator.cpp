@@ -73,7 +73,7 @@ void bimWorld::BIMCameraManipulator::pushForward(const float cdy)
 
 
 	// minimum distance
-	float minDist = _minimumDistance;
+	float minDist = _minimumDistance * 1000;
 	if (getRelativeFlag(_minimumDistanceFlagIndex))
 		minDist *= _modelSize;
 
@@ -93,7 +93,7 @@ void bimWorld::BIMCameraManipulator::pushForward(const float cdy)
 	else
 	{
 		// push the camera forward
-		float delta = -minDist * 1000;
+		float delta = -minDist;
 		osg::Matrixd rotation_matrix(_rotation);
 		osg::Vec3d dv = (osg::Vec3d(0.0f, 0.0f, -1.0f) * rotation_matrix) * (dy * delta);
 		_center += dv;
@@ -118,7 +118,7 @@ void bimWorld::BIMCameraManipulator::beginPushForward(const float cdy)
 	dy = (scaleOption ? dy : -dy);
 
 	// minimum distance
-	float minDist = _minimumDistance;
+	float minDist = _minimumDistance * 1000;
 	if (getRelativeFlag(_minimumDistanceFlagIndex))
 		minDist *= _modelSize;
 
@@ -148,10 +148,10 @@ void bimWorld::BIMCameraManipulator::endPushForward()
 	//_distance = _lastDistance;
 	//_center += _lastDeltaVec;
 	// minimum distance
-	float minDist = _minimumDistance;
+	float minDist = _minimumDistance * 1000;
 	if (getRelativeFlag(_minimumDistanceFlagIndex))
 		minDist *= _modelSize;
-	_distance = minDist * 12;
+	_distance = minDist;
 }
 
 void bimWorld::BIMCameraManipulator::zoomModel(const float cdy, bool pushForwardIfNeeded)
@@ -169,7 +169,7 @@ void bimWorld::BIMCameraManipulator::zoomModel(const float cdy, bool pushForward
 	float scale = 1.0f + (scaleOption ? dy : -dy);
 
 	// minimum distance
-	float minDist = _minimumDistance;
+	float minDist = _minimumDistance * 1000;
 	if (getRelativeFlag(_minimumDistanceFlagIndex))
 		minDist *= _modelSize;
 
@@ -203,9 +203,75 @@ void bimWorld::BIMCameraManipulator::zoomModel(const float cdy, bool pushForward
 	if (limitedSpace && m_host->_ViewerData()->getModelRoot() != NULL && this->_distance > 3 * _modelSize)
 		this->_distance = 3 * _modelSize;
 }
-
+#define CodingZoom 1
 void bimWorld::BIMCameraManipulator::zoomModelLocally(const float pointX, const float pointY, const float cdy, bool pushForwardIfNeeded)
 {
+#if CodingZoom
+
+	osg::Vec3d eye;
+	//osg::Vec3d center;
+	osg::Vec3d up;
+	up = _rotation * osg::Vec3d(0., 1., 0.);
+	eye = _center - _rotation * osg::Vec3d(0., 0., -_distance);
+	//m_host->_ViewerData()->ModelViewer()->getCameraManipulator()->getHomePosition(eye, center, up);
+	auto scenter = m_host->_Coordinate()->CoordinateHelper()->WorldToScreen(osg::Vec3f(_center.x(), _center.y(), _center.z()));
+	auto seye = m_host->_Coordinate()->CoordinateHelper()->WorldToScreen(osg::Vec3f(eye.x(), eye.y(), eye.z()));
+	float z = (scenter.z() - seye.z()) ? (scenter.z() + 1000) : (scenter.z() - 1000);
+	auto vec = m_host->_Coordinate()->CoordinateHelper()->ScreenToWorld(osg::Vec3f(pointX, pointY, z)) - eye;
+	vec.normalize();
+
+	auto dy = cdy;
+
+#ifdef TARGET_IPHONE_SIMULATOR
+	dy = 0.5 * dy;
+#elif _WIN32
+	dy = -dy;
+#else
+	dy = dy;
+#endif
+	// scale
+	//float scale = 1.0f + (scaleOption ? dy : -dy);
+
+	// minimum distance
+	float minDist = _minimumDistance * 1000;
+	if (getRelativeFlag(_minimumDistanceFlagIndex))
+		minDist *= _modelSize;
+	if (_distance > minDist)
+	{
+		minDist = _distance;
+	}
+	osg::Matrixd rotation_matrix(_rotation);
+	osg::Vec3d dv = (/*osg::Vec3d(0.0f, 0.0f, -1.0f)*/vec /** rotation_matrix*/)* (dy * -minDist*0.2);
+	////setTransformation(eye + dv, center, up);
+	//fixVerticalAxis(_center, _rotation, true);
+	//{
+	//	auto center = _center;
+	//	osg::Vec3d lv(center - (eye + dv));
+
+	//	osg::Vec3d f(lv);
+	//	f.normalize();
+	//	osg::Vec3d s(f^up);
+	//	s.normalize();
+	//	osg::Vec3d u(s^f);
+	//	u.normalize();
+
+	//	osg::Matrixd rotation_matrix(s[0], u[0], -f[0], 0.0f,
+	//		s[1], u[1], -f[1], 0.0f,
+	//		s[2], u[2], -f[2], 0.0f,
+	//		0.0f, 0.0f, 0.0f, 1.0f);
+
+	//	_center = center;
+	//	_distance = lv.length();
+	//	_rotation = rotation_matrix.getRotate().inverse();
+	//}
+	//fixVerticalAxis(_center, _rotation, true);
+	//_homeEye += dv;
+	//_distance = (_homeEye - _center).length();
+	////home(0);
+	//_center += dv;
+	setTransformation(eye + dv, _rotation);
+#else
+
 	auto dy = cdy;
 
 #ifdef TARGET_IPHONE_SIMULATOR
@@ -219,7 +285,7 @@ void bimWorld::BIMCameraManipulator::zoomModelLocally(const float pointX, const 
 	float scale = 1.0f + (scaleOption ? dy : -dy);
 
 	// minimum distance
-	float minDist = _minimumDistance;
+	float minDist = _minimumDistance * 1000;
 	if (getRelativeFlag(_minimumDistanceFlagIndex))
 		minDist *= _modelSize;
 
@@ -252,96 +318,80 @@ void bimWorld::BIMCameraManipulator::zoomModelLocally(const float pointX, const 
 	// limit if needed, keep max size as.
 	if (limitedSpace && m_host->_ViewerData()->getModelRoot() != NULL && this->_distance > 3 * _modelSize)
 		this->_distance = 3 * _modelSize;
-	return;
-	//
-	//	osg::Vec3d eye;
-	//	osg::Vec3d center;
-	//	osg::Vec3d up;
-	//	m_host->_ViewerData()->ModelViewer()->getCameraManipulator()->getHomePosition(eye, center, up);
-	//	auto scenter = m_host->_Coordinate()->CoordinateHelper()->WorldToScreen(osg::Vec3f(center.x(), center.y(), center.z()));
-	//	auto seye = m_host->_Coordinate()->CoordinateHelper()->WorldToScreen(osg::Vec3f(eye.x(), eye.y(), eye.z()));
-	//	float z = (scenter.z() - seye.z()) ? (scenter.z() + 1) : (scenter.z() - 1);
-	//	auto vec = m_host->_Coordinate()->CoordinateHelper()->ScreenToWorld(osg::Vec3f(pointX, pointY, scenter.z())) - eye;
-	//	vec.normalize();
-	//
-	//	auto dy = 0.1;
-	//
-	//#ifdef TARGET_IPHONE_SIMULATOR
-	//	dy = 0.5 * dy;
-	//#elif _WIN32
-	//	dy = -dy;
-	//#else
-	//	dy = dy;
-	//#endif
-	//	// scale
-	//	//float scale = 1.0f + (scaleOption ? dy : -dy);
-	//
-	//	// minimum distance
-	//	float minDist = _minimumDistance;
-	//	if (getRelativeFlag(_minimumDistanceFlagIndex))
-	//		minDist *= _modelSize;
-	//
-	//	osg::Matrixd rotation_matrix(_rotation);
-	//	osg::Vec3d dv = (/*osg::Vec3d(0.0f, 0.0f, -1.0f)*/vec /** rotation_matrix*/) * (dy * -_distance);
-	//	////setTransformation(eye + dv, center, up);
-	//	fixVerticalAxis(_center, _rotation, true);
-	//	{
-	//		osg::Vec3d lv(center - (eye + dv));
-	//
-	//		osg::Vec3d f(lv);
-	//		f.normalize();
-	//		osg::Vec3d s(f^up);
-	//		s.normalize();
-	//		osg::Vec3d u(s^f);
-	//		u.normalize();
-	//
-	//		osg::Matrixd rotation_matrix(s[0], u[0], -f[0], 0.0f,
-	//			s[1], u[1], -f[1], 0.0f,
-	//			s[2], u[2], -f[2], 0.0f,
-	//			0.0f, 0.0f, 0.0f, 1.0f);
-	//
-	//		_center = center;
-	//		_distance = lv.length();
-	//		_rotation = rotation_matrix.getRotate().inverse();
-	//	}
-	//	fixVerticalAxis(_center, _rotation, true);
-	//	//_homeEye += dv;
-	//	//_distance = (_homeEye - _center).length();
-	//	////home(0);
-	//	//_center += dv;
-	//
-	return;
-	//if (_distance * scale > minDist || _distance * scale < -minDist)
-	//{
-	//	// regular zoom
-	//	_distance *= scale;
-	//}
-	//else
-	//{
-	//	if (pushForwardIfNeeded)
-	//	{
-	//		// push the camera forward
-	//		float scale = -_distance;
-	//		osg::Matrixd rotation_matrix(_rotation);
-	//		osg::Vec3d dv = (/*osg::Vec3d(0.0f, 0.0f, -1.0f)*/vec * rotation_matrix) * (dy * scale);
-	//		setTransformation(eye + dv, center, up);
-	//		home(0);
-	//		//_center += dv;
-	//	}
-	//	else
-	//	{
-	//		//// set distance on its minimum value
-	//		//_distance = minDist;
+#endif // CodingZoom
 
-	//		// moving to opposite direction.
-	//		_distance = -_distance;
-	//		scaleOption = !scaleOption;
-	//	}
-	//}
+}
 
-	//// limit if needed, keep max size as.
-	//if (limitedSpace && m_host->_ViewerData()->getModelRoot() != NULL && this->_distance > 3 * _modelSize)
-	//	this->_distance = 3 * _modelSize;
+void bimWorld::BIMCameraManipulator::zoomModelWithSelectedCenter(const float cdy, bool pushForwardIfNeeded /*= true*/)
+{
+	auto dy = cdy;
+
+#ifdef TARGET_IPHONE_SIMULATOR
+	dy = 0.5 * dy;
+#elif _WIN32
+	dy = -dy;
+#else
+	dy = dy;
+#endif
+
+	osg::Vec3d eye;
+	//osg::Vec3d center;
+	osg::Vec3d up;
+	up = _rotation * osg::Vec3d(0., 1., 0.);
+	eye = _center - _rotation * osg::Vec3d(0., 0., -_distance);
+
+	auto tcenter = m_host->_ViewerData()->getSelectedCenter();//osg::Vec3f(pointX, pointY, z);
+	auto vec = tcenter - eye;
+	vec.normalize();
+	auto distVec = osg::Vec3(tcenter.x()*vec.x(), tcenter.y()*vec.y(), tcenter.z()*vec.z()) - osg::Vec3(eye.x()*vec.x(), eye.y()*vec.y(), eye.z()*vec.z());
+	auto length = distVec.length();
+	float delta = dy * -_distance*0.2;
+	if (dy < 0 && length < delta)
+	{
+		return;
+	}
+	//delta = dy * -(0.000035*_distance*_distance + 150);
+	osg::Vec3d dv = vec * delta;
+
+	// scale
+	//float scale = 1.0f + (scaleOption ? dy : -dy);
+
+	//// minimum distance
+	//float minDist = _minimumDistance * 1000;
+	//if (getRelativeFlag(_minimumDistanceFlagIndex))
+	//	minDist *= _modelSize;
+	//osg::Matrixd rotation_matrix(_rotation);
+	//osg::Vec3d dv = (/*osg::Vec3d(0.0f, 0.0f, -1.0f)*/vec /** rotation_matrix*/)* (dy * -delta);
+	////setTransformation(eye + dv, center, up);
+	//fixVerticalAxis(_center, _rotation, true);
+	//{
+	//	auto center = _center;
+	//	osg::Vec3d lv(center - (eye + dv));
+
+	//	osg::Vec3d f(lv);
+	//	f.normalize();
+	//	osg::Vec3d s(f^up);
+	//	s.normalize();
+	//	osg::Vec3d u(s^f);
+	//	u.normalize();
+
+	//	osg::Matrixd rotation_matrix(s[0], u[0], -f[0], 0.0f,
+	//		s[1], u[1], -f[1], 0.0f,
+	//		s[2], u[2], -f[2], 0.0f,
+	//		0.0f, 0.0f, 0.0f, 1.0f);
+
+	//	_center = center;
+	//	_distance = lv.length();
+	//	_rotation = rotation_matrix.getRotate().inverse();
+	//}
+	//fixVerticalAxis(_center, _rotation, true);
+	//_homeEye += dv;
+	//_distance = (_homeEye - _center).length();
+	////home(0);
+	//_center += dv;
+	setTransformation(eye + dv, _rotation);
+
+
 }
 
 void bimWorld::BIMCameraManipulator::panModel(const float dx, const float dy, const float dz/* = 0*/)
@@ -421,7 +471,7 @@ void bimWorld::BIMCameraManipulator::endPushSide()
 	float minDist = _minimumDistance;
 	if (getRelativeFlag(_minimumDistanceFlagIndex))
 		minDist *= _modelSize;
-	_distance = minDist * 12;
+	_distance = minDist;
 }
 
 void bimWorld::BIMCameraManipulator::vTranslation(double dy)
@@ -834,7 +884,8 @@ bool bimWorld::BIMCameraManipulator::handleMouseWheel(const osgGA::GUIEventAdapt
 	{
 		// perform zoom
 		//zoomModel(_wheelZoomFactor, false);
-		zoomModelLocally(ea.getXnormalized(), ea.getYnormalized(), _wheelZoomFactor, false);
+		//zoomModelLocally(ea.getX(), ea.getY(), _wheelZoomFactor, false);
+		zoomModelWithSelectedCenter(_wheelZoomFactor, false);
 		m_host->_RenderingThreads()->updateSeveralTimes(1);
 		//us.requestContinuousUpdate(isAnimating() || _thrown);
 		//m_host->RenderingThreads()->setNeedUpdateAndDraw(isAnimating() || _thrown, 3);
@@ -846,7 +897,8 @@ bool bimWorld::BIMCameraManipulator::handleMouseWheel(const osgGA::GUIEventAdapt
 	{
 		// perform zoom
 		//zoomModel(-_wheelZoomFactor, false);
-		zoomModelLocally(ea.getXnormalized(), ea.getYnormalized(), -_wheelZoomFactor, false);
+		//zoomModelLocally(ea.getX(), ea.getY(), -_wheelZoomFactor, false);
+		zoomModelWithSelectedCenter(-_wheelZoomFactor, false);
 		m_host->_RenderingThreads()->updateSeveralTimes(1);
 		//us.requestContinuousUpdate(isAnimating() || _thrown);
 		//m_host->RenderingThreads()->setNeedUpdateAndDraw(isAnimating() || _thrown, 3);
@@ -1100,6 +1152,18 @@ void bimWorld::BIMCameraManipulator::setRotationHandleBtn(osgGA::GUIEventAdapter
 	}
 }
 
+void bimWorld::BIMCameraManipulator::setModelCenterKeepDist(const osg::Vec3d& center)
+{
+	_center = center;
+}
+
+void bimWorld::BIMCameraManipulator::setModelCenter(const osg::Vec3d& center)
+{
+	auto eye = _center - _rotation * osg::Vec3d(0., 0., -_distance);
+	_distance = (eye - center).length();
+	_center = center;
+}
+
 void bimWorld::BIMCameraManipulator::setRotationCenter(const osg::Vec3d& center)
 {
 	auto cc = _center - center;
@@ -1241,17 +1305,6 @@ bool bimWorld::BIMCameraManipulator::getKeyOperationFunc(bimWorld::CameraOperati
 
 void bimWorld::BIMCameraManipulator::bindDefaultEvent()
 {
-	bindKeyDownEvent(KEY_W, beginMoveForward);
-	bindKeyUpEvent(KEY_W, endMoveForward);
-
-	bindKeyDownEvent(KEY_S, beginMoveBackward);
-	bindKeyUpEvent(KEY_S, endMoveBackward);
-
-	bindKeyDownEvent(KEY_A, beginMoveLeft);
-	bindKeyUpEvent(KEY_A, endMoveLeft);
-
-	bindKeyDownEvent(KEY_D, beginMoveRight);
-	bindKeyUpEvent(KEY_D, endMoveRight);
 
 	bindKeyUpEvent(KEY_Space, onHome);
 

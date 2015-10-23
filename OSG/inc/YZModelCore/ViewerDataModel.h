@@ -103,6 +103,10 @@ namespace bimWorld
 
 		virtual core::Event<void(std::vector<void*>, ViewerMode)>& SelectNodeEvent() override;
 
+		virtual osg::Vec3 getSelectedCenter();
+
+		virtual void setSelectedCenter(osg::Vec3 center);
+
 // internal:
 		void createTopMostCamera(osg::Camera* mainCamera);
 
@@ -148,6 +152,8 @@ namespace bimWorld
 		bool m_isLoaded;
 
 		core::Event<void(std::vector<void*>, ViewerMode)> m_selectNodeEvent;
+
+		osg::Vec3 m_selectedCenter;
 	};
 
 }

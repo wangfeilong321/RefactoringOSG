@@ -32,6 +32,7 @@ bimWorld::ModelViewer::ModelViewer(int x,int y,int width,int height)
 	m_modelCore = ModelCoreFactory().getModule(x, y, width, height);
 	m_modelEntity = ModelEntityFactory().getModule(m_modelCore.get());
 }
+#elif __APPLE__
 #else
 
 #endif // _WIN32

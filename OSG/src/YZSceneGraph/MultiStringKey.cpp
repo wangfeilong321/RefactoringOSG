@@ -99,7 +99,7 @@ void bimWorld::MultiStringKey::push_back(const std::string& str)
 
 bimWorld::MultiStringKey::iterator bimWorld::MultiStringKey::insert(const_iterator _Where, const std::string& _Val)
 {
-	auto& iter = base::insert(_Where, _Val);
+	auto iter = base::insert(_Where, _Val);
 #if SORT_KEY
 	std::sort(this->begin(), this->end(), lessThan);
 #endif // SORT_KEY
@@ -117,9 +117,9 @@ void bimWorld::MultiStringKey::insert(const_iterator begin, const_iterator end)
 std::string bimWorld::MultiStringKey::toString()
 {
 	std::stringstream stream;
-	for each (auto str in (*this))
+    for(auto iter = (*this).begin(); iter!=(*this).end(); iter++)
 	{
-		stream << str;
+		stream << (*iter);
 	}
 	return stream.str();
 }

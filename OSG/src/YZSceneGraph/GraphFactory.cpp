@@ -80,17 +80,17 @@ GraphFactory::~GraphFactory()
 void bimWorld::GraphFactory::constructTree(const std::vector<YZ::Component*>& constructs, const std::vector<YZ::Component*>& groups, const std::vector<CategoryNode>& children)
 {
 	//m_host->_MaterialSetting()->isModified();
-	for each (auto com in constructs)
+    for(auto iter = constructs.begin(); iter!=constructs.end(); iter++)
 	{
-		com->setUserValue(NODE_CURRENT_COLOR, std::string(NODE_ORIGINAL_COLOR));
+		(*iter)->setUserValue(NODE_CURRENT_COLOR, std::string(NODE_ORIGINAL_COLOR));
 
 		//com->getOrCreateUserDataContainer()->setUserObject(NODE_CURRENT_STATESET, com->getStateSet());
 		//com->getOrCreateUserDataContainer()->setUserObject(NODE_TEMP_STATESET, NULL);
 		//com->setUpdateCallback(new MaterialCallback(m_host));
-		if (!com->isMultiFloor())
+		if (!(*iter)->isMultiFloor())
 		{
-			com->setUserValue(NODE_VISIBILITY, true);
-			com->setCullCallback(new VisibleControlCallback());
+			(*iter)->setUserValue(NODE_VISIBILITY, true);
+			(*iter)->setCullCallback(new VisibleControlCallback());
 			//for each (auto drawable in com->getChild(0)->asGeode()->getDrawableList())
 			//{
 			//	drawable->setCullCallback(new DrawableCullCallback());
@@ -98,31 +98,31 @@ void bimWorld::GraphFactory::constructTree(const std::vector<YZ::Component*>& co
 		}
 	}
 
-	for each (auto child in children)
+    for(auto iter = children.begin(); iter!=children.end(); iter++)
 	{
 		osg::ref_ptr<osg::Group> tree = new osg::Group();
-		tree->setName("tree:" + child.Value());
-		for each (auto com in constructs)
+		tree->setName("tree:" + (*iter).Value());
+        for(auto comIter = constructs.begin(); comIter!=constructs.end(); comIter++)
 		{
-			AddGroups(child, com, tree);
+			AddGroups((*iter), (*comIter), tree);
 		}
 		m_host->_ViewerData()->getModelRoot()->addChild(tree);
 	}
 
 	osg::ref_ptr<osg::Group> groupTree = new osg::Group();
 	groupTree->setName("tree:group");
-	for each (auto group in groups)
+    for(auto groupIter = groups.begin(); groupIter!=groups.end(); groupIter++)
 	{
-		auto g = dynamic_cast<YZ::GroupElement*>(group);
+		auto g = dynamic_cast<YZ::GroupElement*>(*groupIter);
 		if (!g->getGroup())
 		{
-			groupTree->addChild(group);
+			groupTree->addChild(*groupIter);
 		}		
 		g->setUserValue(NODE_HIGHLIGHTED, false);
 		g->setName("group:" + g->getStrValue(YZ::YZ_GUID));
-		for each (auto com in g->getRelComponent())
+        for(auto comIter = g->getRelComponent().begin(); comIter!= g->getRelComponent().end(); comIter++)
 		{
-			g->addChild(com);
+			g->addChild(*comIter);
 		}
 	}
 	m_host->_ViewerData()->getModelRoot()->addChild(groupTree);
@@ -144,13 +144,15 @@ void bimWorld::GraphFactory::AddGroups(CategoryNode child, YZ::Component* com, o
 		assert(false);
 		return;
 	}
-	for each (auto strKey in keys)
+    for(auto strKeyIter = keys.begin(); strKeyIter!=keys.end(); strKeyIter++)
 	{
+        auto strKey = *strKeyIter;
 		bimWorld::MultiStringKey subValueKey;
 		bimWorld::MultiStringKey tempParentStrKey;
 		auto base = tree;
-		for each (auto str in strKey)
+        for(auto strIter = strKey.begin(); strIter!=strKey.end(); strIter++)
 		{
+            auto str = *strIter;
 			// order
 			// 1f
 			// \|/

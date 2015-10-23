@@ -134,6 +134,21 @@ float totalFrame_FP = 60.0f;
 
 void bimWorld::CameraManipulator::enableFirstPersonControl()
 {
+
+	bindKeyDownEvent(KEY_W, beginMoveForward);
+	bindKeyUpEvent(KEY_W, endMoveForward);
+
+	bindKeyDownEvent(KEY_S, beginMoveBackward);
+	bindKeyUpEvent(KEY_S, endMoveBackward);
+
+	bindKeyDownEvent(KEY_A, beginMoveLeft);
+	bindKeyUpEvent(KEY_A, endMoveLeft);
+
+	bindKeyDownEvent(KEY_D, beginMoveRight);
+	bindKeyUpEvent(KEY_D, endMoveRight);
+	unbindMouseEvent(MIDDLE_MOUSE_BUTTON);
+
+	return;
 	//if (m_isFirstPersonManipEnabled)
 	//	return;
 	//switchMatrixManipulator(ManipulatorType::Person);
@@ -166,6 +181,22 @@ void bimWorld::CameraManipulator::enableFirstPersonControl()
 
 void bimWorld::CameraManipulator::disableFirstPersonControl()
 {
+	unbindKeyDownEvent(KEY_W);
+	unbindKeyUpEvent(KEY_W);
+
+	unbindKeyDownEvent(KEY_S);
+	unbindKeyUpEvent(KEY_S);
+
+	unbindKeyDownEvent(KEY_A);
+	unbindKeyUpEvent(KEY_A);
+
+	unbindKeyDownEvent(KEY_D);
+	unbindKeyUpEvent(KEY_D);
+	bindMouseEvent(MIDDLE_MOUSE_BUTTON, onPanModel);
+	setModelCenterKeepViewPoint(m_host->ViewerData()->getModelRoot());
+	m_host->_RenderingThreads()->updateSeveralTimes();
+
+	return;
 	//if (!m_isFirstPersonManipEnabled)
 	//{
 	//	return;
@@ -280,15 +311,23 @@ bimWorld::BIMCameraManipulator* bimWorld::CameraManipulator::getBIMCameraManip()
 
 void bimWorld::CameraManipulator::setModelCenter(void* ptr)
 {
-	// TODO: to be implemented.
-	return;
-
 	auto node = static_cast<osg::Node*>(ptr);
 	if (!ptr)
 	{
 		return;
 	}
-	getBIMCameraManip()->setRotationCenter(node->getBound().center());
+	//getBIMCameraManip()->setRotationCenter(node->getBound().center());
+	getBIMCameraManip()->setModelCenterKeepDist(node->getBound().center());
+}
+
+void bimWorld::CameraManipulator::setModelCenterKeepViewPoint(void* ptr)
+{
+	auto node = static_cast<osg::Node*>(ptr);
+	if (!ptr)
+	{
+		return;
+	}
+	getBIMCameraManip()->setModelCenter(node->getBound().center());
 }
 
 void bimWorld::CameraManipulator::bindKeyUpEvent(bimWorld::KeySymbol key, bimWorld::CameraOperationTypes operation)

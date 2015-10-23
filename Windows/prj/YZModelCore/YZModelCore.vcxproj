@@ -171,8 +171,9 @@ copy $(SolutionDir)..\lib\$(Platform)\$(Configuration)\$(TargetName).lib $(YZ_PC
     <ClInclude Include="..\..\..\OSG\inc\public\ICameraManipulators.h" />
     <ClInclude Include="..\..\..\OSG\inc\public\ICameraSettings.h" />
     <ClInclude Include="..\..\..\OSG\inc\public\IFixedFrameRate.h" />
-    <ClInclude Include="..\..\..\OSG\inc\common\IModelCore.h" />
-    <ClInclude Include="..\..\..\OSG\inc\common\IModelCoreFactory.h" />
+    <ClInclude Include="..\..\..\OSG\inc\public\IModelCore.h" />
+    <ClInclude Include="..\..\..\OSG\inc\public\IModelCoreFactory.h" />
+    <ClInclude Include="..\..\..\OSG\inc\public\IModelCoreFactoryIOS.h" />
     <ClInclude Include="..\..\..\OSG\inc\public\IMovingCamera.h" />
     <ClInclude Include="..\..\..\OSG\inc\public\INodeController.h" />
     <ClInclude Include="..\..\..\OSG\inc\public\IRenderingThreads.h" />
@@ -181,7 +182,7 @@ copy $(SolutionDir)..\lib\$(Platform)\$(Configuration)\$(TargetName).lib $(YZ_PC
     <ClInclude Include="..\..\..\OSG\inc\public\IZoomModel.h" />
     <ClInclude Include="..\..\..\OSG\inc\public\MouseKeySymbol.h" />
     <ClInclude Include="..\..\..\OSG\inc\public\ManipulatorType.h" />
-    <ClInclude Include="..\..\..\OSG\inc\common\YZModelPlugin.h" />
+    <ClInclude Include="..\..\..\OSG\inc\public\YZModelPlugin.h" />
     <ClInclude Include="..\..\..\OSG\inc\YZModelCore\BackgroundSetting.h" />
     <ClInclude Include="..\..\..\OSG\inc\YZModelCore\Billboard.h" />
     <ClInclude Include="..\..\..\OSG\inc\YZModelCore\BillboardFactory.h" />
@@ -204,6 +205,7 @@ copy $(SolutionDir)..\lib\$(Platform)\$(Configuration)\$(TargetName).lib $(YZ_PC
     <ClInclude Include="..\..\..\OSG\inc\YZModelCore\IViewerDataModel.h" />
     <ClInclude Include="..\..\..\OSG\inc\YZModelCore\MaterialSetting.h" />
     <ClInclude Include="..\..\..\OSG\inc\YZModelCore\ModelCoreFactory.h" />
+    <ClInclude Include="..\..\..\OSG\inc\YZModelCore\ModelCoreFactoryIOS.h" />
     <ClInclude Include="..\..\..\OSG\inc\YZModelCore\ModelListener.h" />
     <ClInclude Include="..\..\..\OSG\inc\YZModelCore\MovingCamera.h" />
     <ClInclude Include="..\..\..\OSG\inc\YZModelCore\NodeController.h" />
@@ -262,6 +264,9 @@ copy $(SolutionDir)..\lib\$(Platform)\$(Configuration)\$(TargetName).lib $(YZ_PC
     <ProjectReference Include="..\YZTools\YZTools.vcxproj">
       <Project>{d0701429-99bf-4fa6-bdb4-5fe2259956a4}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\OSG\src\YZModelCore\ModelCoreFactoryIOS.mm" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -9,9 +9,9 @@ namespace bimWorld
 		/** do customized cull code.*/
 		virtual bool cull(osg::NodeVisitor*, osg::Drawable* drawable, osg::State* /*state*/) const
 		{
-			for each (auto parent in drawable->getParents())
+            for(auto iter = drawable->getParents().begin(); iter!= drawable->getParents().end(); iter++)
 			{
-				if (!allParentsAreVisible(parent))
+				if (!allParentsAreVisible(*iter))
 				{
 					return true;
 				}
@@ -26,13 +26,13 @@ namespace bimWorld
 				return false;
 			}
 			auto parents = child->getParents();
-			for each (auto parent in parents)
+            for(auto iter = parents.begin(); iter!=parents.end(); iter++)
 			{
-				if (parent->getNodeMask() == 0x0)
+				if ((*iter)->getNodeMask() == 0x0)
 				{
 					return false;
 				}
-				if (!allParentsAreVisible(parent))
+				if (!allParentsAreVisible(*iter))
 				{
 					return false;
 				}
@@ -74,8 +74,9 @@ namespace bimWorld
 				return false;
 			}
 			auto parents = child->getParents();
-			for each (auto parent in parents)
+            for(auto iter = parents.begin(); iter!=parents.end(); iter++)
 			{
+                auto parent = *iter;
 				if (parent->getNodeMask() == 0x0)
 				{
 					return false;

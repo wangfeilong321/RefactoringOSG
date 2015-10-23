@@ -621,6 +621,16 @@ osg::Camera* bimWorld::ViewerDataModel::getTopRoot()
 	return m_topRoot;
 }
 
+osg::Vec3 bimWorld::ViewerDataModel::getSelectedCenter()
+{
+	return m_selectedCenter;
+}
+
+void bimWorld::ViewerDataModel::setSelectedCenter(osg::Vec3 center)
+{
+	m_selectedCenter = center;
+}
+
 #ifdef Android
 
 void bimWorld::ViewerDataModel::onMousePress(float x, float y, int button)

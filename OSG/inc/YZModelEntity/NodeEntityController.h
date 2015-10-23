@@ -24,6 +24,10 @@ namespace bimWorld
 		
 		virtual void unHideOthers(const std::string& id) override;
 
+		virtual void hideOthers(const std::vector<std::string>& ids) override;
+
+		virtual void unHideOthers(const std::vector<std::string>& ids) override;
+
 		virtual void unHideAll() override;
 		
 		virtual void toggleHide(const std::string& id) override;
@@ -106,7 +110,9 @@ namespace bimWorld
 		virtual bool revertStateColorOfConstructs(const std::string& nodeId) override;
 
 		virtual core::Event<void(std::vector<std::string>, ViewerMode)>& SelectNodeEvent() override;
-	
+		
+		virtual void setSelectedCenter(const std::string& id) override;
+
 	protected:
 
 		void onSelectNode(std::vector<void*> ids, ViewerMode mode);

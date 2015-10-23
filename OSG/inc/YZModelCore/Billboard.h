@@ -2,7 +2,8 @@
 #define __BILLBOARD_H__
 
 #include "IBillboard.h"
-#include <DataModel.h>
+#include "DataModel.h"
+//#include <DataModel.h>
 #include <osg/Node>
 #include "YZModelCoreModule.h"
 

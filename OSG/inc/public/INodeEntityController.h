@@ -23,6 +23,10 @@ namespace bimWorld
 
 		virtual void unHideOthers(const std::string& id) = 0;
 
+		virtual void hideOthers(const std::vector<std::string>& ids) = 0;
+
+		virtual void unHideOthers(const std::vector<std::string>& ids) = 0;
+
 		virtual void toggleHide(const std::string& id) = 0;
 
 		//// <透明node节点以外的所有节点>
@@ -105,6 +109,7 @@ namespace bimWorld
 		
 		virtual core::Event<void(std::vector<std::string>, ViewerMode)>& SelectNodeEvent() = 0;
 
+		virtual void setSelectedCenter(const std::string& id) = 0;
 	};
 }
 #endif // __ICONTROL_BY_DATA_H__

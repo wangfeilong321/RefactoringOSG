@@ -14,7 +14,7 @@ namespace bimWorld
 		// <开启一个渲染引擎>
 		virtual void startRendering() override;
 
-		virtual void	setIsExternalRendering(bool value) override;
+		virtual void setIsExternalRendering(bool value) override;
 
 		virtual void setNeedUpdateAndDraw(bool value, int delay = 0) override;
 
@@ -26,7 +26,7 @@ namespace bimWorld
 
 
 		// <刷新>
-		virtual void	updateSeveralTimes(int times = 3) override;
+		virtual void updateSeveralTimes(int times = 3) override;
 
 		virtual void onlyUpdateFrame() override;
 

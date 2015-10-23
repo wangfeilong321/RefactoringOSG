@@ -39,7 +39,7 @@ void bimWorld::NodeController::unHideAll()
 		_lock.lock();
 
 		node->setUserValue(NODE_VISIBILITY, true);
-		node->setNodeMask(unsigned int(-1));
+		node->setNodeMask((unsigned int)(-1));
 		_lock.unlock();
 		return true;
 	}, true);
@@ -91,7 +91,7 @@ void bimWorld::NodeController::unHide(const std::vector<void*>& nodes)
 		if (!node)
 			continue;
 		node->setUserValue(NODE_VISIBILITY, true);
-		node->setNodeMask(unsigned int(-1));
+		node->setNodeMask((unsigned int)(-1));
 	}
 	_lock.unlock();
 	m_host->RenderingThreads()->updateSeveralTimes(1);
@@ -118,8 +118,9 @@ bool findAllParentsOfNode(osg::Node* node, std::vector<osg::Node*>& outVector)
 	}
 
 	//auto parent = node->getParent(0);
-	for each (auto parent in node->getParents())
+    for(auto parentIter = node->getParents().begin(); parentIter!=node->getParents().end(); parentIter++)
 	{
+        auto parent = *parentIter;
 		while (parent)
 		{
 			outVector.push_back(parent);
@@ -219,7 +220,7 @@ void bimWorld::NodeController::unHideOthers(void * node)
 			return false;
 
 		cur_node->setUserValue(NODE_VISIBILITY, true);
-		cur_node->setNodeMask(unsigned int(-1));
+		cur_node->setNodeMask((unsigned int)(-1));
 		return true;
 	}, true);
 
@@ -248,7 +249,7 @@ void bimWorld::NodeController::toggleHide(const std::vector<void*>& nodes)
 		if (n->getNodeMask() == 0)
 		{
 			n->setUserValue(NODE_VISIBILITY, true);
-			n->setNodeMask(unsigned int(-1));
+			n->setNodeMask((unsigned int)(-1));
 		}
 		else if (n->getNodeMask() == -1)
 		{

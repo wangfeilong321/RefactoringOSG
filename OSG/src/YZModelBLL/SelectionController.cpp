@@ -69,10 +69,10 @@ void bimWorld::SelectionController::clearSelection()
 		return;
 
 	// cancel last highlighted nodes.
-	for (int i = 0; i < currentSelected.size(); i++)
-	{
-		m_host->NodeControl()->unHighlightWithTopGroup(currentSelected[i]);
-	}
+	//for (int i = 0; i < currentSelected.size(); i++)
+	//{
+	//	m_host->NodeControl()->unHighlightWithTopGroup(currentSelected[i]);
+	//}
 	currentSelected.clear();
 }
 
@@ -121,12 +121,13 @@ void bimWorld::SelectionController::setCurrentSelect(std::vector<std::string> ne
 	// cancel last highlighted nodes.
 	clearSelection();
 
-	// highlight current nodes.
-	for (int i = 0; i < newSelection.size(); i++)
-	{
-		m_host->NodeControl()->highlightWithTopGroup(newSelection[i]);
-	}
+	//// highlight current nodes.
+	//for (int i = 0; i < newSelection.size(); i++)
+	//{
+	//	m_host->NodeControl()->highlightWithTopGroup(newSelection[i]);
+	//}
 	//m_host->CameraManipulator()->setModelCenter(newSelection[0]);
+	m_host->NodeControl()->setSelectedCenter(newSelection[0]);
 
 	currentSelected = newSelection;
 	m_isTransparentLastTime = needTransparent;

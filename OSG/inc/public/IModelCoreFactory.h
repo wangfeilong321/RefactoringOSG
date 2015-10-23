@@ -1,5 +1,5 @@
-#ifndef __IMODULE_CORE_FACTORY_H__
-#define __IMODULE_CORE_FACTORY_H__
+#ifndef __IMODEL_CORE_FACTORY_H__
+#define __IMODEL_CORE_FACTORY_H__
 #include "IModelCore.h"
 #include <memory>
 #include "config.h"
@@ -22,4 +22,4 @@ namespace bimWorld
 	protected:
 	};
 }
-#endif // __IMODULE_CORE_FACTORY_H__
+#endif // __IMODEL_CORE_FACTORY_H__

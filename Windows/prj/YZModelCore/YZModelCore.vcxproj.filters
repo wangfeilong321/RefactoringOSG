@@ -61,11 +61,11 @@
       <Extensions>cpp;cxx;c;def</Extensions>
       <ParseFiles>true</ParseFiles>
     </Filter>
-    <Filter Include="ExportInterface">
-      <UniqueIdentifier>{49afcf22-2897-4ae6-a16c-6d1807a23912}</UniqueIdentifier>
-    </Filter>
     <Filter Include="CameraManipulator\CameraAnimation">
       <UniqueIdentifier>{3f59cf45-2a51-4132-8626-42c466786e00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface">
+      <UniqueIdentifier>{49afcf22-2897-4ae6-a16c-6d1807a23912}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -189,15 +189,6 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\OSG\inc\common\IModelCoreFactory.h">
-      <Filter>YZModelCore</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\OSG\inc\common\IModelCore.h">
-      <Filter>YZModelCore</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\OSG\inc\common\YZModelPlugin.h">
-      <Filter>YZModelCoreModule</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\OSG\inc\YZModelCore\SkyBox.h">
       <Filter>BackgroundSetting</Filter>
     </ClInclude>
@@ -205,37 +196,37 @@
       <Filter>CameraManipulator</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\OSG\inc\public\IBackgroundSetting.h">
-      <Filter>ExportInterface</Filter>
+      <Filter>Interface</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\OSG\inc\public\IBillboard.h">
-      <Filter>ExportInterface</Filter>
+      <Filter>Interface</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\OSG\inc\public\ICameraManipulators.h">
-      <Filter>ExportInterface</Filter>
+      <Filter>Interface</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\OSG\inc\public\ICameraSettings.h">
-      <Filter>ExportInterface</Filter>
+      <Filter>Interface</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\OSG\inc\public\IFixedFrameRate.h">
-      <Filter>ExportInterface</Filter>
+      <Filter>Interface</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\OSG\inc\public\IMovingCamera.h">
-      <Filter>ExportInterface</Filter>
+      <Filter>Interface</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\OSG\inc\public\INodeController.h">
-      <Filter>ExportInterface</Filter>
+      <Filter>Interface</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\OSG\inc\public\IRenderingThreads.h">
-      <Filter>ExportInterface</Filter>
+      <Filter>Interface</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\OSG\inc\public\IScreenCapture.h">
-      <Filter>ExportInterface</Filter>
+      <Filter>Interface</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\OSG\inc\public\ISwitchView.h">
-      <Filter>ExportInterface</Filter>
+      <Filter>Interface</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\OSG\inc\public\IZoomModel.h">
-      <Filter>ExportInterface</Filter>
+      <Filter>Interface</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\OSG\inc\public\CameraOperationTypes.h">
       <Filter>CameraManipulator</Filter>
@@ -251,6 +242,21 @@
     </ClInclude>
     <ClInclude Include="..\..\..\OSG\inc\public\MouseKeySymbol.h">
       <Filter>CameraManipulator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\OSG\inc\public\IModelCoreFactory.h">
+      <Filter>YZModelCore</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\OSG\inc\public\IModelCore.h">
+      <Filter>YZModelCore</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\OSG\inc\YZModelCore\ModelCoreFactoryIOS.h">
+      <Filter>YZModelCore</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\OSG\inc\public\IModelCoreFactoryIOS.h">
+      <Filter>YZModelCore</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\OSG\inc\public\YZModelPlugin.h">
+      <Filter>YZModelCoreModule</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -347,5 +353,10 @@
     <ClCompile Include="..\..\..\OSG\src\YZModelCore\CameraOperation.cpp">
       <Filter>CameraManipulator</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\OSG\src\YZModelCore\ModelCoreFactoryIOS.mm">
+      <Filter>YZModelCore</Filter>
+    </None>
   </ItemGroup>
 </Project>

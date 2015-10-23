@@ -1,5 +1,5 @@
-#ifndef __YZ_MODEL_CORE_MODULE_H__
-#define __YZ_MODEL_CORE_MODULE_H__
+#ifndef __YZ_MODEL_BLL_MODULE_H__
+#define __YZ_MODEL_BLL_MODULE_H__
 #include "YZModelPlugin.h"
 #include "config.h"
 
@@ -15,4 +15,4 @@ namespace bimWorld
 	};
 }
 
-#endif // __YZ_MODEL_CORE_MODULE_H__
+#endif // __YZ_MODEL_BLL_MODULE_H__

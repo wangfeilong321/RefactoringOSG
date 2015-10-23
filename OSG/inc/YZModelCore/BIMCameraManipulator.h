@@ -11,6 +11,7 @@
 
 namespace bimWorld
 {
+    class CameraOperation;
 
 	class YIZHU_EXPORT BIMCameraManipulator : public osgGA::MultiTouchTrackballManipulator, public CameraManipulatoerPickBase
 	{
@@ -47,6 +48,8 @@ namespace bimWorld
 		virtual void zoomModel(const float dy, bool pushForwardIfNeeded = true) override;
 		
 		virtual void zoomModelLocally(const float pointX, const float pointY, const float dy, bool pushForwardIfNeeded = true);
+		
+		virtual void zoomModelWithSelectedCenter(const float dy, bool pushForwardIfNeeded = true);
 
 		virtual void panModel(const float dx, const float dy, const float dz = 0);
 		virtual void pushSide(const float dx, const float dy, const float dz = 0);
@@ -81,6 +84,10 @@ namespace bimWorld
 
 		// only set rotation center, without moving the camera center.
 		void setRotationCenter(const osg::Vec3d& center);
+
+		void setModelCenter(const osg::Vec3d& center);
+
+		void setModelCenterKeepDist(const osg::Vec3d& center);
 
 		void bindKeyUpEvent(bimWorld::KeySymbol key, bimWorld::CameraOperationTypes operation);
 		
@@ -144,7 +151,8 @@ namespace bimWorld
 		std::map<int, std::function<bool(const osgGA::GUIEventAdapter&, osgGA::GUIActionAdapter&)> > m_keyUpEventMap;
 		std::map<int, std::function<bool(const osgGA::GUIEventAdapter&, osgGA::GUIActionAdapter&)> > m_keyDownEventMap;
 		std::map<int, std::function<bool(const double eventTimeDelta, const float dx, const float dy)> > m_mouseEventMap;
-		friend class CameraOperation;
+        
+        friend class CameraOperation;
 		//std::unique_ptr<CameraOperation> m_operation;
 		CameraOperation* m_operation;
 		bool scaleOption;

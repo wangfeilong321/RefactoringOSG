@@ -63,5 +63,13 @@
     <ClInclude Include="..\..\..\OSG\inc\public\ModelViewer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\OSG\inc\public\ModelViewerIOS.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\OSG\src\YZModelBLL\ModelViewerIOS.mm">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

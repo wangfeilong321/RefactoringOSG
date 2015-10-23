@@ -1,6 +1,7 @@
 #include "NodeEntityController.h"
 //#include <boost/locale.hpp>
 #include "StringExt.h"
+#include "VectorExt.h"
 #include "NodeSearcher.h"
 
 #ifdef _WIN32
@@ -62,10 +63,10 @@ void bimWorld::NodeEntityController::hideOthers(const std::string & id)
 	if (!n)
 		return;
 	auto coms = YZ::getAllComponents();
-	for each (auto com in coms)
+    for(auto iter = coms.begin(); iter!=coms.end(); iter++)
 	{
-		if (com.second != n)
-			m_controller->hide(com.second);
+		if (iter->second != n)
+			m_controller->hide(iter->second);
 	}
 	//m_controller->hideOthers(ptr);
 }
@@ -80,11 +81,77 @@ void bimWorld::NodeEntityController::unHideOthers(const std::string & id)
 	auto n = static_cast<osg::Node*>(ptr);
 	if (!n)
 		return;
-	auto coms = YZ::getAllComponents();
-	for each (auto com in coms)
+    auto coms = YZ::getAllComponents();
+    for(auto iter = coms.begin(); iter!=coms.end(); iter++)
 	{
-		if (com.second != n)
-			m_controller->unHide(com.second);
+		if (iter->second != n)
+			m_controller->unHide(iter->second);
+	}
+	//m_controller->unHideOthers(ptr);
+}
+
+void bimWorld::NodeEntityController::hideOthers(const std::vector<std::string>& ids)
+{
+	if (ids.empty())
+		return;
+	auto coms = YZ::getAllComponents();
+	for (auto iter = coms.begin(); iter != coms.end(); iter++)
+	{
+		std::function<bool(std::string)> func = [this, iter](const std::string& id){
+			if (id.empty())
+			{
+				return false;
+			}
+
+			auto ptr = findNodeById(id);
+			if (!ptr)
+				return false;
+
+			auto n = static_cast<osg::Node*>(ptr);
+			if (!n)
+				return false;
+			return iter->second == n;
+		};
+
+		if (util::VectorExtension::contains(ids, func))
+		{
+			continue;
+		}
+
+		m_controller->hide(iter->second);
+	}
+	//m_controller->hideOthers(ptr);
+}
+
+void bimWorld::NodeEntityController::unHideOthers(const std::vector<std::string>& ids)
+{
+	if (ids.empty())
+		return;
+	auto coms = YZ::getAllComponents();
+	for (auto iter = coms.begin(); iter != coms.end(); iter++)
+	{
+		std::function<bool(std::string)> func = [this, iter](const std::string& id){
+			if (id.empty())
+			{
+				return false;
+			}
+
+			auto ptr = findNodeById(id);
+			if (!ptr)
+				return false;
+
+			auto n = static_cast<osg::Node*>(ptr);
+			if (!n)
+				return false;
+			return iter->second == n;
+		};
+
+		if (util::VectorExtension::contains(ids, func))
+		{
+			continue;
+		}
+
+		m_controller->unHide(iter->second);
 	}
 	//m_controller->unHideOthers(ptr);
 }
@@ -776,18 +843,18 @@ void bimWorld::NodeEntityController::highlightWithTopGroup(const std::string& id
 
 void bimWorld::NodeEntityController::Search(std::vector<YZ::Component*> coms, std::function<void(YZ::Component*)> func)
 {
-	for each (auto com in coms)
+    for(auto iter = coms.begin(); iter!=coms.end(); iter++)
 	{
 		try
 		{
-			if (!com)
+			if (!(*iter))
 			{
 				continue;
 			}
-			auto group = dynamic_cast<YZ::GroupElement*>(com);
+			auto group = dynamic_cast<YZ::GroupElement*>((*iter));
 			if (!group)
 			{
-				func(com);
+				func((*iter));
 			}
 			else
 			{
@@ -796,7 +863,7 @@ void bimWorld::NodeEntityController::Search(std::vector<YZ::Component*> coms, st
 		}
 		catch (...)
 		{
-			func(com);
+			func((*iter));
 		}
 	}
 }
@@ -839,15 +906,15 @@ void bimWorld::NodeEntityController::unHideAll()
 		//model->addChild(comp.get());
 		components.push_back(comp.get());
 	}
-	for each (auto com in components)
+    for(auto iter = components.begin(); iter!= components.end(); iter++)
 	{
-		if (!com)
+		if (!(*iter))
 			continue;
 		std::mutex _lock;
 		_lock.lock();
 
-		com->setUserValue(NODE_VISIBILITY, true);
-		com->setNodeMask(unsigned int(-1));
+		(*iter)->setUserValue(NODE_VISIBILITY, true);
+		(*iter)->setNodeMask((unsigned int)(-1));
 		_lock.unlock();
 	}
 	//NodeSearcher::traverseAllSubNodes(m_host->ViewerData()->getModelRoot(), [](osg::Node* node)->bool{
@@ -862,4 +929,15 @@ void bimWorld::NodeEntityController::unHideAll()
 	//	return true;
 	//}, true);
 	m_host->_modelCore->RenderingThreads()->updateSeveralTimes(1);
+}
+
+void bimWorld::NodeEntityController::setSelectedCenter(const std::string& id)
+{
+	if (id.empty())
+		return;
+	auto com = static_cast<YZ::Component*>(findNodeById(id));
+	if (!com)
+		return;
+	auto center = com->getBound().center();
+	m_host->_modelCore->_ViewerData()->setSelectedCenter(center);
 }

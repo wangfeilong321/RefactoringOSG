@@ -27,7 +27,7 @@ std::shared_ptr<bimWorld::IModelCore> bimWorld::ModelCoreFactory::getModule(HWND
 std::shared_ptr<bimWorld::IModelCore> bimWorld::ModelCoreFactory::getModule(int x,int y,int width,int height)
 {
 	auto core = std::make_shared<YZModelCoreInternal>();
-	core->_ViewerData()->initOSG(x,y,width, height);
+//	core->_ViewerData()->initOSG(x,y,width, height);
 	return core;
 }
 
