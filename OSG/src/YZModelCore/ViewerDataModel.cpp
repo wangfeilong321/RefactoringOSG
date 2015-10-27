@@ -16,6 +16,10 @@ bimWorld::ViewerDataModel::ViewerDataModel(YZModelCoreInternal* host) :YZModelCo
 	m_isLoaded = false;
 	m_mViewer = NULL;
 	//_isComponentFunc = NULL;
+
+	std::function<void(std::vector<void*>, bimWorld::ViewerMode)> func = std::bind(&bimWorld::ViewerDataModel::onSelectNode, this, std::placeholders::_1, std::placeholders::_2);
+	core::InstanceFunction<void(std::vector<void*>, bimWorld::ViewerMode)> insfunc(func, this, "onSelectNode");
+	m_selectNodeEvent += insfunc;
 }
 
 osgViewer::Viewer* bimWorld::ViewerDataModel::ModelViewer()
@@ -25,6 +29,36 @@ osgViewer::Viewer* bimWorld::ViewerDataModel::ModelViewer()
 		return NULL;
 	}
 	return m_mViewer.get();
+}
+
+void bimWorld::ViewerDataModel::onSelectNode(std::vector<void*> nodes, ViewerMode mode)
+{
+	m_selectedNodes.clear();
+	
+	if (nodes.empty())
+	{
+		return;
+	}
+
+	if (mode == Orbit)
+	{
+		m_selectedNodes.push_back(nodes[0]);
+	}
+	else
+	{
+		std::copy(nodes.begin(), nodes.end(), m_selectedNodes.begin());
+	}
+}
+
+std::vector<void*> bimWorld::ViewerDataModel::getSelectedNodes()
+{
+	return m_selectedNodes;
+}
+
+void bimWorld::ViewerDataModel::setSelectedNodes(const std::vector<void*>& nodes)
+{
+	m_selectedNodes.clear();
+	std::copy(nodes.begin(), nodes.end(), m_selectedNodes.begin());
 }
 
 osg::Group* bimWorld::ViewerDataModel::TopRoot()

@@ -10,7 +10,7 @@ namespace bimWorld
 	class YIZHU_EXPORT IModelLoader
 	{
 	public:
-		virtual bool loadFromDAL(const YZString& dbDir, std::vector<bimWorld::CategoryNode> children) = 0;
+		virtual bool loadFromDAL(const std::string& dbDir, std::vector<bimWorld::CategoryNode> children) = 0;
 
 		virtual core::Event<void()>& UnLoadEvent() = 0;
 

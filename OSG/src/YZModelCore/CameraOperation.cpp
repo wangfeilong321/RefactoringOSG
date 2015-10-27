@@ -280,8 +280,64 @@ bool bimWorld::CameraOperation::onPanModel(const double eventTimeDelta, const fl
 	return true;
 }
 
+void rotateCamera(osg::Quat& rotation, const double yaw, const double pitch, const osg::Vec3d& localUp)
+{
+	bool verticalAxisFixed = (localUp != osg::Vec3d(0.0, 0., 0.));
+	verticalAxisFixed = false;
+	//// fix current rotation
+	//if (verticalAxisFixed)
+	//	fixVerticalAxis(rotation, localUp, true);
+
+	// rotations
+	osg::Quat rotateYaw(-yaw, verticalAxisFixed ? localUp : rotation * osg::Vec3d(0., 1., 0.));
+	rotation = rotation * rotateYaw;
+	return;
+	osg::Quat rotatePitch;
+	osg::Quat newRotation;
+	osg::Vec3d cameraRight(rotation * osg::Vec3d(1., 0., 0.));
+
+	double my_dy = pitch;
+	int i = 0;
+
+	do {
+
+		// rotations
+		rotatePitch.makeRotate(my_dy, cameraRight);
+		newRotation = rotation * rotateYaw * rotatePitch;
+
+		//// update vertical axis
+		//if (verticalAxisFixed)
+		//	fixVerticalAxis(newRotation, localUp, false);
+
+		// check for viewer's up vector to be more than 90 degrees from "up" axis
+		osg::Vec3d newCameraUp = newRotation * osg::Vec3d(0., 1., 0.);
+		if (newCameraUp * localUp > 0.)
+		{
+
+			// apply new rotation
+			rotation = newRotation;
+			return;
+
+		}
+
+		my_dy /= 2.;
+		if (++i == 20)
+		{
+			rotation = rotation * rotateYaw;
+			return;
+		}
+
+	} while (true);
+}
+
 bool bimWorld::CameraOperation::onRotateCamera(const double eventTimeDelta, const float dx, const float dy)
 {
+	////osg::CoordinateFrame coordinateFrame = m_host->getCoordinateFrame(m_host->_center);
+	////osg::Vec3d localUp = m_host->getUpVector(coordinateFrame);
+	//auto localUp = m_host->_rotation * osg::Vec3d(0., 1., 0.);
+	////m_host->_rotation.
+	//rotateCamera(m_host->_rotation, dx, dy, localUp);
+	//return true;
 	// rotate camera
 	if (m_host->getVerticalAxisFixed())
 		m_host->rotateWithFixedVertical(dx, dy);

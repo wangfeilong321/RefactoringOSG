@@ -112,6 +112,12 @@ namespace bimWorld
 
 		void createBackGroundCamera(osg::Camera* mainCamera);
 
+		void onSelectNode(std::vector<void*> nodes, ViewerMode mode);
+		
+		std::vector<void*> getSelectedNodes();
+		
+		void setSelectedNodes(const std::vector<void*>& nodes);
+
 		std::function<bool(void*)> _isComponentFunc;
 
 	protected:
@@ -154,6 +160,8 @@ namespace bimWorld
 		core::Event<void(std::vector<void*>, ViewerMode)> m_selectNodeEvent;
 
 		osg::Vec3 m_selectedCenter;
+
+		std::vector<void*> m_selectedNodes;
 	};
 
 }

@@ -613,7 +613,7 @@ core::Event<void(const std::string[], int)>& bimWorld::ModelLoader::SelectionEve
 	return m_selectionEvent;
 }
 
-bool bimWorld::ModelLoader::loadFromDAL(const YZString& dbDir, std::vector<bimWorld::CategoryNode> children)
+bool bimWorld::ModelLoader::loadFromDAL(const std::string& dbDir, std::vector<bimWorld::CategoryNode> children)
 {
 	if (!YZ::OpenBIMFile(dbDir))
 		return false;

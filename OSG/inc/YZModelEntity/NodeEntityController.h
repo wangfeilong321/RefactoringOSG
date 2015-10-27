@@ -19,7 +19,11 @@ namespace bimWorld
 		virtual void hide(const std::string& id) override;
 
 		virtual void unHide(const std::string& id) override;
-		
+
+		virtual void hideWithTopGroup(const std::string& id) override;
+
+		virtual void unHideWithTopGroup(const std::string& id) override;
+
 		virtual void hideOthers(const std::string& id) override;
 		
 		virtual void unHideOthers(const std::string& id) override;
@@ -112,6 +116,10 @@ namespace bimWorld
 		virtual core::Event<void(std::vector<std::string>, ViewerMode)>& SelectNodeEvent() override;
 		
 		virtual void setSelectedCenter(const std::string& id) override;
+
+		virtual void setSelectedCenter(const std::vector<std::string>& ids) override;
+
+		virtual void setSelectedNodes(const std::vector<std::string>& ids) override;
 
 	protected:
 

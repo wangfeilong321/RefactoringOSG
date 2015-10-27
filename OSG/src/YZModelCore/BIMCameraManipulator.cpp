@@ -13,7 +13,7 @@ limitedSpace(limitedSpace), PickBase(host, selectionPrecision), osgGA::MultiTouc
 	_allowThrow = false;
 	PickBase::CameraManipulatoerPickBase(host, selectionPrecision);
 	setMinimumDistance(1);
-	setVerticalAxisFixed(true);
+	//setVerticalAxisFixed(true);
 	m_moveDelta = 0.07;
 	m_movingForward = false;
 	m_movingBackward = false;
@@ -884,8 +884,14 @@ bool bimWorld::BIMCameraManipulator::handleMouseWheel(const osgGA::GUIEventAdapt
 	{
 		// perform zoom
 		//zoomModel(_wheelZoomFactor, false);
-		//zoomModelLocally(ea.getX(), ea.getY(), _wheelZoomFactor, false);
-		zoomModelWithSelectedCenter(_wheelZoomFactor, false);
+		if (m_host->_ViewerData()->getSelectedNodes().empty())
+		{
+			zoomModelLocally(ea.getX(), ea.getY(), _wheelZoomFactor, false);
+		}
+		else
+		{
+			zoomModelWithSelectedCenter(_wheelZoomFactor, false);
+		}
 		m_host->_RenderingThreads()->updateSeveralTimes(1);
 		//us.requestContinuousUpdate(isAnimating() || _thrown);
 		//m_host->RenderingThreads()->setNeedUpdateAndDraw(isAnimating() || _thrown, 3);
@@ -897,8 +903,14 @@ bool bimWorld::BIMCameraManipulator::handleMouseWheel(const osgGA::GUIEventAdapt
 	{
 		// perform zoom
 		//zoomModel(-_wheelZoomFactor, false);
-		//zoomModelLocally(ea.getX(), ea.getY(), -_wheelZoomFactor, false);
-		zoomModelWithSelectedCenter(-_wheelZoomFactor, false);
+		if (m_host->_ViewerData()->getSelectedNodes().empty())
+		{
+			zoomModelLocally(ea.getX(), ea.getY(), -_wheelZoomFactor, false);
+		}
+		else
+		{
+			zoomModelWithSelectedCenter(-_wheelZoomFactor, false);
+		}
 		m_host->_RenderingThreads()->updateSeveralTimes(1);
 		//us.requestContinuousUpdate(isAnimating() || _thrown);
 		//m_host->RenderingThreads()->setNeedUpdateAndDraw(isAnimating() || _thrown, 3);

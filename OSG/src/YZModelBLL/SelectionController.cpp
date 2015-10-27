@@ -127,9 +127,12 @@ void bimWorld::SelectionController::setCurrentSelect(std::vector<std::string> ne
 	//	m_host->NodeControl()->highlightWithTopGroup(newSelection[i]);
 	//}
 	//m_host->CameraManipulator()->setModelCenter(newSelection[0]);
-	m_host->NodeControl()->setSelectedCenter(newSelection[0]);
+	m_host->NodeControl()->setSelectedCenter(newSelection);
+
+	m_host->NodeControl()->setSelectedNodes(newSelection);
 
 	currentSelected = newSelection;
+
 	m_isTransparentLastTime = needTransparent;
 }
 

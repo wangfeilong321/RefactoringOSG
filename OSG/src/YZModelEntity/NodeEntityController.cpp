@@ -51,6 +51,56 @@ void bimWorld::NodeEntityController::unHide(const std::string & id)
 	m_controller->unHide(ptr);
 }
 
+void bimWorld::NodeEntityController::hideWithTopGroup(const std::string& id)
+{
+	if (id.empty())
+		return;
+	auto ptr = static_cast<YZ::Component*>(findNodeById(id));
+	if (!ptr)
+		return;
+	YZ::GroupElement* g = ptr->getGroup();
+	if (!g)
+	{
+		m_controller->hide(ptr);
+		return;
+	}
+	while (g&&g->getGroup())
+	{
+		g = g->getGroup();
+	}
+	m_controller->hide(g);
+	//Search(g->getRelComponent(), [this](YZ::Component* com){
+	//	m_controller->hide(com);
+	//});
+	//g->setUserValue(NODE_VISIBILITY, false);
+}
+
+void bimWorld::NodeEntityController::unHideWithTopGroup(const std::string& id)
+{
+	if (id.empty())
+		return;
+	auto ptr = static_cast<YZ::Component*>(findNodeById(id));
+	if (!ptr)
+		return;
+	YZ::GroupElement* g = ptr->getGroup();
+	if (!g)
+	{
+		m_controller->unHide(ptr);
+		return;
+	}
+	while (g&&g->getGroup())
+	{
+		g = g->getGroup();
+	}
+	m_controller->unHide(g);
+	//Search(g->getRelComponent(), [this](YZ::Component* com){
+	//	m_controller->unHide(com);
+	//});
+	//g->setUserValue(NODE_VISIBILITY, true);
+	//m_controller->unHide(ptr);
+}
+
+
 void bimWorld::NodeEntityController::hideOthers(const std::string & id)
 {
 	if (id.empty())
@@ -940,4 +990,40 @@ void bimWorld::NodeEntityController::setSelectedCenter(const std::string& id)
 		return;
 	auto center = com->getBound().center();
 	m_host->_modelCore->_ViewerData()->setSelectedCenter(center);
+}
+
+void bimWorld::NodeEntityController::setSelectedCenter(const std::vector<std::string>& ids)
+{
+	if (ids.empty())
+		return;
+	osg::Vec3f center;
+	float count = 0;
+	for (auto iter = ids.begin(); iter != ids.end();iter++)
+	{
+		auto com = static_cast<YZ::Component*>(findNodeById(*iter));
+		if (!com)
+			return;
+		center += com->getBound().center();
+		count++;
+	}
+	center /= count;
+	m_host->_modelCore->_ViewerData()->setSelectedCenter(center);
+}
+
+void bimWorld::NodeEntityController::setSelectedNodes(const std::vector<std::string>& ids)
+{
+	if (ids.empty())
+		return;
+
+	std::vector<void*> coms;
+	
+	for (auto iter = ids.begin(); iter != ids.end(); iter++)
+	{
+		auto com = static_cast<YZ::Component*>(findNodeById(*iter));
+		if (!com)
+			return;
+		coms.push_back(com);
+	}
+
+	m_host->_modelCore->_ViewerData()->setSelectedNodes(coms);
 }

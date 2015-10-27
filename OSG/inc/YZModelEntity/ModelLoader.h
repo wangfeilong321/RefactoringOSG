@@ -17,7 +17,7 @@ namespace bimWorld
 		ModelLoader(YZModelEntityInternal* core);
 		~ModelLoader();
 
-		virtual bool loadFromDAL(const YZString& dbDir, std::vector<bimWorld::CategoryNode> children) override;
+		virtual bool loadFromDAL(const std::string& dbDir, std::vector<bimWorld::CategoryNode> children) override;
 
 		///////////////////////////////////////////////////////////////////////模型数据加载/////////////////////////////////////////////////////////////////////////////////
 		// <加载图形>

@@ -19,6 +19,10 @@ namespace bimWorld
 
 		virtual void unHide(const std::string& id) = 0;
 
+		virtual void hideWithTopGroup(const std::string& id) = 0;
+
+		virtual void unHideWithTopGroup(const std::string& id) = 0;
+
 		virtual void hideOthers(const std::string& id) = 0;
 
 		virtual void unHideOthers(const std::string& id) = 0;
@@ -110,6 +114,10 @@ namespace bimWorld
 		virtual core::Event<void(std::vector<std::string>, ViewerMode)>& SelectNodeEvent() = 0;
 
 		virtual void setSelectedCenter(const std::string& id) = 0;
+
+		virtual void setSelectedCenter(const std::vector<std::string>& ids) = 0;
+
+		virtual void setSelectedNodes(const std::vector<std::string>& ids) = 0;
 	};
 }
 #endif // __ICONTROL_BY_DATA_H__
