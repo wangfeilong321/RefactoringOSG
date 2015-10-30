@@ -60,7 +60,7 @@ void bimWorld::SelectionController::onSelect(const std::vector<std::string>& ids
 		setCurrentSelect(ids);
 	}
 
-	core_Event_Trigger(m_selectEvent, ids);
+	core_Event_Trigger(m_selectEvent, currentSelected);
 }
 
 void bimWorld::SelectionController::clearSelection()

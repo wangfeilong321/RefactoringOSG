@@ -11,6 +11,7 @@
 #include "YZModelCoreInternal.h"
 #include "CameraAnimation.h"
 #include "CameraOperation.h"
+#include "CustomCameraManipulator.h"
 
 bimWorld::CameraManipulator::CameraManipulator(YZModelCoreInternal* host) :YZModelCoreModule(host),
 m_isFirstPersonManipEnabled(false)

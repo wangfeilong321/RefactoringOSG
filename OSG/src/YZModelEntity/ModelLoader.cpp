@@ -22,7 +22,7 @@
 #include "YZComponent.h"
 //#include "YZGeometryElement.h"
 #include "YZBlockyElement.h"
-#include "YZPolygonMesh.h"
+//#include "YZPolygonMesh.h"
 #include "YZPosition3.h"
 
 #include "IYZModelCore.h"

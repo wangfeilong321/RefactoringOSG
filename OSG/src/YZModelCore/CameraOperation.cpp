@@ -332,6 +332,9 @@ void rotateCamera(osg::Quat& rotation, const double yaw, const double pitch, con
 
 bool bimWorld::CameraOperation::onRotateCamera(const double eventTimeDelta, const float dx, const float dy)
 {
+	m_host->_yaw += dx;
+	m_host->_pitch += dy;
+	return true;
 	////osg::CoordinateFrame coordinateFrame = m_host->getCoordinateFrame(m_host->_center);
 	////osg::Vec3d localUp = m_host->getUpVector(coordinateFrame);
 	//auto localUp = m_host->_rotation * osg::Vec3d(0., 1., 0.);

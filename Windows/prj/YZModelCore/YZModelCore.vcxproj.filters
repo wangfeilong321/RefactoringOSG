@@ -67,6 +67,9 @@
     <Filter Include="Interface">
       <UniqueIdentifier>{49afcf22-2897-4ae6-a16c-6d1807a23912}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CameraManipulator\Custom">
+      <UniqueIdentifier>{bcce1c2a-76f4-484c-ac86-8c4182d499d8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\OSG\inc\YZModelCore\IntPtr.h">
@@ -258,6 +261,9 @@
     <ClInclude Include="..\..\..\OSG\inc\public\YZModelPlugin.h">
       <Filter>YZModelCoreModule</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\OSG\inc\YZModelCore\CustomCameraManipulator.h">
+      <Filter>CameraManipulator\Custom</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\OSG\src\YZModelCore\RenderingThread.cpp">
@@ -352,6 +358,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\OSG\src\YZModelCore\CameraOperation.cpp">
       <Filter>CameraManipulator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\OSG\src\YZModelCore\CustomCameraManipulator.cpp">
+      <Filter>CameraManipulator\Custom</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

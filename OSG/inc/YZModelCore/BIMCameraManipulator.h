@@ -36,6 +36,16 @@ namespace bimWorld
 		void setPosition(const osg::Vec3& eye, const osg::Vec3& center, const osg::Vec3& up, const osg::Matrix& matrix);
 		
 		virtual void setByMatrix(const osg::Matrixd& matrix) override;
+		virtual osg::Matrixd getMatrix() const override;
+		virtual osg::Matrixd getInverseMatrix() const override;
+
+		osg::Matrixd getScaleMatrix() const;
+
+		osg::Matrixd getPitchMatrix() const;
+
+		osg::Matrixd getYawMatrix() const;
+
+		osg::Matrixd getViewMatrix() const;
 
 		void getStandardManipulatorParam(osg::Vec3d& eye, osg::Vec3d& center, osg::Vec3d& up);
 
@@ -105,8 +115,12 @@ namespace bimWorld
 		
 		bool getMouseOperationFunc(bimWorld::CameraOperationTypes operation, std::function<bool(const double, const double, const double)> &func);
 
-	protected:
+		virtual void setAutoComputeHomePosition(bool) override { }
 
+		/** Manually set the home position, and set the automatic compute of home position. */
+		virtual void setHomePosition(const osg::Vec3d& eye, const osg::Vec3d& center, const osg::Vec3d& up, bool autoComputeHomePosition = false) override;
+
+	protected:
 		//void key_d_down();
 
 		//void key_a_down();
@@ -128,10 +142,10 @@ namespace bimWorld
 		bool KeyDownEvent(int key, const osgGA::GUIEventAdapter& ea, osgGA::GUIActionAdapter& us);
 		
 		void bindDefaultEvent();
-
+		osg::Vec3d getRightVector() const;
 		// <Êó±ê²Ù×÷Æ÷ÈÝÆ÷>
 		osg::ref_ptr<Manipulator::MouseManipulatorContainer> _manipContainer;
-
+		
 	private:
 		bool limitedSpace;
 		bool m_isSettingCameraMatrix;
@@ -158,6 +172,10 @@ namespace bimWorld
 		bool scaleOption;
 		double _lastDistance;
 		osg::Vec3d _lastDeltaVec;
+		osg::Vec3d _trans;
+		double _scale;
+		double _yaw;
+		double _pitch;
 		float _mBeginX;
 		float _mBeginY;
 		float _mDeltaX;

@@ -118,7 +118,25 @@ namespace bimWorld
 		
 		void setSelectedNodes(const std::vector<void*>& nodes);
 
+		void setLocalLookAt(const osg::Vec3& eye, const osg::Vec3& center = osg::Vec3(0, 0, 0), const osg::Vec3& up = osg::Vec3(0, 1, 0));
+
 		std::function<bool(void*)> _isComponentFunc;
+
+		osg::Vec3 m_transVec;
+		osg::Matrix m_transMat;
+		float m_yawAngle;
+		osg::Matrix m_yawMat;
+		float m_pitchAngle;
+		osg::Matrix m_pitchMat;
+		osg::Vec3 m_scaleVec;
+		osg::Matrix m_scaleMat;
+		osg::Matrix m_localViewMat;
+		osg::ref_ptr<osg::MatrixTransform> m_scale;
+		osg::ref_ptr<osg::MatrixTransform> m_localView;
+
+		osg::Vec3 m_eye;
+		osg::Vec3 m_center;
+		osg::Vec3 m_up;
 
 	protected:
 
@@ -162,6 +180,15 @@ namespace bimWorld
 		osg::Vec3 m_selectedCenter;
 
 		std::vector<void*> m_selectedNodes;
+		//osg::Vec3 m_transVec;
+		//osg::Matrix m_transMat;
+		//float m_yawAngle;
+		//osg::Matrix m_yawMat;
+		//float m_pitchAngle;
+		//osg::Matrix m_pitchMat;
+		//osg::Vec3 m_scaleVec;
+		//osg::Matrix m_scaleMat;
+		//osg::Matrix m_localViewMat;
 	};
 
 }

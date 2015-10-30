@@ -299,8 +299,142 @@ bool bimWorld::ZoomModel::zoomTo(void** nodes, int length, bool withoutAnimation
 	return true;
 }
 
+void bimWorld::ZoomModel::localizeVector(osg::Node* node, osg::Vec3& vec)
+{
+	auto n = node;
+	do
+	{
+		osg::MatrixTransform *mt = ((n == node) ? NULL : dynamic_cast<osg::MatrixTransform*>(n));
+		if (mt != NULL) {
+			vec = mt->getMatrix().preMult(vec);
+			//center = mt->getMatrix().preMult(center);
+			//position = mt->getMatrix().preMult(position);
+		}
+	} while (n->getNumParents() == 1 && (n = n->getParent(0)));
+
+}
+
+void bimWorld::ZoomModel::localizeVector(osg::Node* node, osg::Vec3d& vec)
+{
+	auto n = node;
+	do
+	{
+		osg::MatrixTransform *mt = ((n == node) ? NULL : dynamic_cast<osg::MatrixTransform*>(n));
+		if (mt != NULL) {
+			vec = mt->getMatrix().preMult(vec);
+			//center = mt->getMatrix().preMult(center);
+			//position = mt->getMatrix().preMult(position);
+		}
+	} while (n->getNumParents() == 1 && (n = n->getParent(0)));
+
+}
+
 bool bimWorld::ZoomModel::zoomRoot(bool withoutAnimation /*= true*/, ViewDirection direction /*= Front*/)
 {
+#pragma region Calculate Zoom Parameter
+
+	osg::Node *node = m_host->ViewerData()->getModelRoot();
+	osg::Node* n = node;
+	osg::Node *newNode = n;
+	if (!n)
+	{
+		osg::notify(osg::WARN) << "The root node is null." << std::endl << "In ModelViewerImpl::zoomTo." << std::endl;
+		return false;
+	}
+
+	CameraPerspective pers;
+	bool got = m_host->_ViewerData()->getCameraPerspective(pers);
+	if (!got)
+	{
+		osg::notify(osg::FATAL) << "Get camera perspective failed, in zoomTo at ModelViewerImpl." << std::endl;
+		return false;
+	}
+
+	auto sphere = n->getBound();
+	auto radius = sphere.radius();
+	auto center = sphere.center();
+
+	auto tx = radius / std::tan(pers.fov / 2.0 / 180.0 * 3.14159265358979323846);
+
+	osg::Matrix rotation = osg::Matrix::rotate(osg::DegreesToRadians(90.0), osg::Vec3d(1, 0, 0));
+	osg::Vec3d position;
+	osg::Vec3d up;
+	switch (direction)
+	{
+	case ViewDirection::Front:
+		up = osg::Vec3d(0, 1, 0);
+		position = osg::Vec3d(0, 0, 0 + tx);
+		break;
+	case ViewDirection::Back:
+		up = osg::Vec3d(0, 1, 0);
+		position = osg::Vec3d(0, 0, 0 - tx);
+		break;
+	case ViewDirection::Left:
+		up = osg::Vec3d(0, 1, 0);
+		position = osg::Vec3d(0 - tx, 0, 0);
+		break;
+	case ViewDirection::Right:
+		up = osg::Vec3d(0, 1, 0);
+		position = osg::Vec3d(0 + tx, 0, 0);
+		break;
+	case ViewDirection::Top:
+		up = osg::Vec3d(0, 0, -1);
+		position = osg::Vec3d(0, 0 + tx, 0);
+		break;
+	case ViewDirection::Bottom:
+		up = osg::Vec3d(0, 0, 1);
+		position = osg::Vec3d(0, 0 - tx, 0);
+		break;
+	default:
+		break;
+	}
+
+	up = rotation.preMult(up);
+	position = rotation.preMult(position);
+	position += rotation.preMult(center);
+
+	//localizeVector(node, center);
+	localizeVector(node, position);
+	//do
+	//{
+	//	osg::MatrixTransform *mt = ((n == node) ? NULL : dynamic_cast<osg::MatrixTransform*>(n));
+	//	if (mt != NULL) {
+	//		center = mt->getMatrix().preMult(center);
+	//		position = mt->getMatrix().preMult(position);
+	//	}
+	//} while (n->getNumParents() == 1 && (n = n->getParent(0)));
+
+#pragma endregion
+	//auto camera = m_host->ViewerData()->ModelViewer()->getCamera();
+	//camera->setViewMatrixAsLookAt(position, center, up);
+	//auto manip = m_host->_CameraManipulator()->getBIMCameraManip();
+	//auto mat = manip->getMatrix();
+	//mat.makeLookAt(position, center, up);
+	//manip->setByMatrix(mat);
+	//m_host->_ViewerData()->setLocalLookAt(position, center, up);
+#pragma region Animation TODO
+	//if (withoutAnimation)
+	//{
+		m_host->_CameraManipulator()->getCameraManipulator()->setHomePosition(position, center, up, false);
+		//m_host->_ViewerData()->ModelViewer()->home();
+	//}
+	//else
+	//{
+	//	double raduis = newNode->getBound().radius();
+	//	osg::Vec3d frontVector = position - center;
+	//	frontVector.normalize();
+	//	osg::Vec3d newposition = center + frontVector*raduis*2.5;
+
+	//	m_host->_CameraManipulator()->CameraAnimation()->play(newposition, center, up);
+
+	//}
+#pragma endregion
+
+
+	// we need refresh at last.
+	m_host->_RenderingThreads()->updateSeveralTimes(1);
+	return true;
+
 	return zoomTo(m_host->ViewerData()->getModelRoot(), withoutAnimation, direction);
 }
 

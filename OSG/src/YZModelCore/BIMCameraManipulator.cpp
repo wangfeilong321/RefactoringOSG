@@ -26,6 +26,12 @@ limitedSpace(limitedSpace), PickBase(host, selectionPrecision), osgGA::MultiTouc
 	scaleOption = true;
 
 	bindDefaultEvent();
+
+	_autoComputeHomePosition = false;
+	_yaw = 0;
+	_pitch = 0;
+	_scale = 1;
+	_trans = osg::Vec3d(0, 0, 0);
 }
 
 bimWorld::BIMCameraManipulator::~BIMCameraManipulator()
@@ -206,7 +212,37 @@ void bimWorld::BIMCameraManipulator::zoomModel(const float cdy, bool pushForward
 #define CodingZoom 1
 void bimWorld::BIMCameraManipulator::zoomModelLocally(const float pointX, const float pointY, const float cdy, bool pushForwardIfNeeded)
 {
-#if CodingZoom
+#if 1
+	//osg::Vec3d eye;
+	osg::Vec3d center;
+	//osg::Vec3d up;
+	//up = /*_rotation * */osg::Vec3d(0., 1., 0.);
+	//eye = _center - /*_rotation * */osg::Vec3d(0., 0., -_distance);
+	auto scenter = m_host->_Coordinate()->CoordinateHelper()->WorldToScreen(osg::Vec3f(_homeCenter.x(), _homeCenter.y(), _homeCenter.z()));
+	auto seye = m_host->_Coordinate()->CoordinateHelper()->WorldToScreen(osg::Vec3f(_homeEye.x(), _homeEye.y(), _homeEye.z()));
+	float z = (scenter.z() - seye.z()) ? (scenter.z() + 1000) : (scenter.z() - 1000);
+	center = m_host->_Coordinate()->CoordinateHelper()->ScreenToWorld(osg::Vec3f(pointX, pointY, z));
+	//_trans = center;
+	//m_host->_ViewerData()->setLocalLookAt(m_host->_ViewerData()->m_eye, center, m_host->_ViewerData()->m_up);
+	auto delta = cdy;
+
+#ifdef TARGET_IPHONE_SIMULATOR
+	delta = 0.5 * delta;
+#elif _WIN32
+	delta = -delta;
+#else
+	delta = delta;
+#endif
+
+	_trans += (_homeCenter - center)*delta*_scale;
+	_scale *= 1 + delta;
+
+	//auto sv = m_host->_ViewerData()->m_scaleVec;
+	//m_host->_ViewerData()->m_scaleVec += osg::Vec3(delta, delta, delta);
+	//m_host->_ViewerData()->m_scale->setMatrix(osg::Matrix::scale(m_host->_ViewerData()->m_scaleVec));
+	return;
+
+#elif CodingZoom
 
 	osg::Vec3d eye;
 	//osg::Vec3d center;
@@ -396,6 +432,10 @@ void bimWorld::BIMCameraManipulator::zoomModelWithSelectedCenter(const float cdy
 
 void bimWorld::BIMCameraManipulator::panModel(const float dx, const float dy, const float dz/* = 0*/)
 {
+	auto vec = osg::Vec3d(dx * 40, dz, dy * 30) * 1000 * getYawMatrix()*getPitchMatrix();
+	_homeEye += vec;
+	_homeCenter += vec;
+	return;
 #ifndef TARGET_IPHONE_SIMULATOR
 
 	osg::Matrix rotation_matrix;
@@ -417,6 +457,8 @@ void bimWorld::BIMCameraManipulator::panModel(const float dx, const float dy, co
 
 void bimWorld::BIMCameraManipulator::pushSide(const float dx, const float dy, const float dz/* = 0*/)
 {
+	_trans += osg::Vec3d(dx, dy, dz) * 1000;
+	return;
 #ifndef TARGET_IPHONE_SIMULATOR
 
 	osg::Matrix rotation_matrix;
@@ -495,21 +537,6 @@ void bimWorld::BIMCameraManipulator::setPosition(const osg::Vec3& eye, const osg
 	auto trans = mat.getTrans();
 	_distance = trans.z();
 	_center = osg::Vec3d(0., 0., -_distance) * matrix;
-}
-
-void bimWorld::BIMCameraManipulator::setByMatrix(const osg::Matrixd& matrix)
-{
-	if (m_isSettingCameraMatrix)
-	{
-		_rotation = matrix.getRotate();
-		auto mat = matrix * osg::Matrix::inverse(osg::Matrix::translate(_center)) * osg::Matrix::inverse(osg::Matrix::rotate(_rotation));
-		auto trans = mat.getTrans();
-		_distance = trans.z();
-	}
-	else
-	{
-		osgGA::MultiTouchTrackballManipulator::setByMatrix(matrix);
-	}
 }
 
 void bimWorld::BIMCameraManipulator::getStandardManipulatorParam(osg::Vec3d& eye, osg::Vec3d& center, osg::Vec3d& up)
@@ -997,6 +1024,9 @@ bool bimWorld::BIMCameraManipulator::performMovementRightMouseButton(const doubl
 
 bool bimWorld::BIMCameraManipulator::performMouseDeltaMovement(const float dx, const float dy)
 {
+	_yaw += dx;
+	_pitch += dy;
+	return true;
 	// rotate camera
 	if (getVerticalAxisFixed())
 		rotateWithFixedVertical(dx, dy);
@@ -1354,4 +1384,91 @@ bool bimWorld::BIMCameraManipulator::getMouseOperationFunc(bimWorld::CameraOpera
 		return false;
 	}
 	return true;
+}
+
+
+void bimWorld::BIMCameraManipulator::setByMatrix(const osg::Matrixd& matrix)
+{
+	if (m_isSettingCameraMatrix)
+	{
+		_rotation = matrix.getRotate();
+		auto mat = matrix * osg::Matrix::inverse(osg::Matrix::translate(_center)) * osg::Matrix::inverse(osg::Matrix::rotate(_rotation));
+		auto trans = mat.getTrans();
+		_distance = trans.z();
+	}
+	else
+	{
+		osgGA::MultiTouchTrackballManipulator::setByMatrix(matrix);
+	}
+}
+
+//void bimWorld::BIMCameraManipulator::setByInverseMatrix(const osg::Matrixd& matrix)
+//{
+//	setByMatrix(osg::Matrixd::inverse(matrix));
+//}
+
+osg::Matrixd bimWorld::BIMCameraManipulator::getMatrix() const
+{
+	return osg::Matrixd::translate(_homeEye) *
+		osg::Matrixd::rotate(_pitch, getRightVector()) *
+		osg::Matrixd::rotate(_yaw, _homeUp) *
+		osg::Matrixd::translate(_homeCenter);
+	osg::Matrixd mat;
+	mat.makeLookAt(_homeEye, _homeCenter, _homeUp);
+	return mat;
+	return osg::Matrixd::translate(0., 0., _distance) *
+		osg::Matrixd::rotate(_rotation) *
+		osg::Matrixd::translate(_center);
+}
+
+osg::Matrixd bimWorld::BIMCameraManipulator::getScaleMatrix() const
+{
+	return osg::Matrixd::scale(_scale, _scale, _scale);
+}
+
+osg::Matrixd bimWorld::BIMCameraManipulator::getPitchMatrix() const
+{
+	return osg::Matrixd::rotate(_pitch, getRightVector()/**getViewMatrix()*/);
+}
+
+osg::Matrixd bimWorld::BIMCameraManipulator::getYawMatrix() const
+{
+	return osg::Matrixd::rotate(_yaw, _homeUp/**getViewMatrix()*/);
+}
+
+osg::Matrixd bimWorld::BIMCameraManipulator::getViewMatrix() const
+{
+	return osg::Matrixd::lookAt(_homeEye, _homeCenter, _homeUp);
+}
+
+
+osg::Matrixd bimWorld::BIMCameraManipulator::getInverseMatrix() const
+{
+	return /*osg::Matrixd::translate(_trans) **/
+		getYawMatrix() *
+		getPitchMatrix() *
+		getScaleMatrix() *
+		getViewMatrix();
+	return osg::Matrixd::translate(_homeCenter) *
+		osg::Matrixd::rotate(_yaw, _homeUp) *
+		osg::Matrixd::rotate(_pitch, getRightVector()) *
+		osg::Matrixd::translate(_homeEye);
+	return osg::Matrixd::inverse(getMatrix());
+	return osg::Matrixd::translate(-_center) *
+		osg::Matrixd::rotate(_rotation.inverse()) *
+		osg::Matrixd::translate(0.0, 0.0, -_distance);
+}
+
+osg::Vec3d bimWorld::BIMCameraManipulator::getRightVector() const
+{
+	return (_homeEye - _homeCenter) ^ _homeUp;
+}
+
+/** Manually set the home position, and set the automatic compute of home position. */
+void bimWorld::BIMCameraManipulator::setHomePosition(const osg::Vec3d& eye, const osg::Vec3d& center, const osg::Vec3d& up, bool autoComputeHomePosition /*= false*/)
+{
+	//setAutoComputeHomePosition(autoComputeHomePosition);
+	_homeEye = eye;
+	_homeCenter = center;
+	_homeUp = up;
 }

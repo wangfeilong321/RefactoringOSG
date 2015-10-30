@@ -153,7 +153,7 @@ copy $(SolutionDir)..\lib\$(Platform)\$(Configuration)\$(TargetName).lib $(YZ_PC
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(SolutionDir)..\bin\$(Platform)\$(Configuration)\$(ProjectName).dll</OutputFile>
       <AdditionalLibraryDirectories>$(OSG_ROOT)\x64\lib;$(BOOST_ROOT)\bin\vc12_x64DLL\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>opengl32.lib;glu32.lib;OpenThreads.lib;osg.lib;osgDB.lib;osgManipulator.lib;osgAnimation.lib;osgUtil.lib;osgGA.lib;osgViewer.lib;osgText.lib;$(SolutionDir)..\lib\$(Platform)\$(Configuration)\YZTools.lib;$(SolutionDir)..\lib\x64\3rdparty\libpng-1.2.37\Release\libpng14.lib;$(SolutionDir)..\lib\x64\3rdparty\zlib-1.2.8\Release\zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary>$(SolutionDir)..\lib\$(Platform)\$(Configuration)\$(TargetName).lib</ImportLibrary>
     </Link>
@@ -196,6 +196,7 @@ copy $(SolutionDir)..\lib\$(Platform)\$(Configuration)\$(TargetName).lib $(YZ_PC
     <ClInclude Include="..\..\..\OSG\inc\YZModelCore\CameraSettings.h" />
     <ClInclude Include="..\..\..\OSG\inc\YZModelCore\Coordinate.h" />
     <ClInclude Include="..\..\..\OSG\inc\YZModelCore\CoordinateHelper.h" />
+    <ClInclude Include="..\..\..\OSG\inc\YZModelCore\CustomCameraManipulator.h" />
     <ClInclude Include="..\..\..\OSG\inc\YZModelCore\FixedFrameRate.h" />
     <ClInclude Include="..\..\..\OSG\inc\YZModelCore\FixedFramerateController.h" />
     <ClInclude Include="..\..\..\OSG\inc\YZModelCore\ICoordinate.h" />
@@ -241,6 +242,7 @@ copy $(SolutionDir)..\lib\$(Platform)\$(Configuration)\$(TargetName).lib $(YZ_PC
     <ClCompile Include="..\..\..\OSG\src\YZModelCore\CameraSettings.cpp" />
     <ClCompile Include="..\..\..\OSG\src\YZModelCore\config.cpp" />
     <ClCompile Include="..\..\..\OSG\src\YZModelCore\Coordinate.cpp" />
+    <ClCompile Include="..\..\..\OSG\src\YZModelCore\CustomCameraManipulator.cpp" />
     <ClCompile Include="..\..\..\OSG\src\YZModelCore\DataModel.cpp" />
     <ClCompile Include="..\..\..\OSG\src\YZModelCore\FixedFrameRate.cpp" />
     <ClCompile Include="..\..\..\OSG\src\YZModelCore\FixedFramerateController.cpp" />

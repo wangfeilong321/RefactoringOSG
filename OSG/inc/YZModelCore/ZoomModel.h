@@ -4,6 +4,7 @@
 #include <string>
 #include "YZModelCoreModule.h"
 #include "IZoomModel.h"
+#include <osg/Node>
 
 namespace bimWorld
 {
@@ -27,6 +28,11 @@ namespace bimWorld
 		virtual bool zoomRoot(bool withoutAnimation = true, ViewDirection direction = ViewDirection::Front) override;
 
 		virtual void zoom(double dy) override;
+		
+		virtual void localizeVector(osg::Node* node, osg::Vec3& vec);
+
+		virtual void localizeVector(osg::Node* node, osg::Vec3d& vec);
+
 	protected:
 	};
 }

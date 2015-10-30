@@ -1,4 +1,4 @@
-#include "ViewerDataModel.h"
+ï»¿#include "ViewerDataModel.h"
 #include "YZModelCoreInternal.h"
 #include <osg/Depth>
 #include <osgViewer/ViewerEventHandlers>
@@ -34,7 +34,7 @@ osgViewer::Viewer* bimWorld::ViewerDataModel::ModelViewer()
 void bimWorld::ViewerDataModel::onSelectNode(std::vector<void*> nodes, ViewerMode mode)
 {
 	m_selectedNodes.clear();
-	
+
 	if (nodes.empty())
 	{
 		return;
@@ -46,6 +46,7 @@ void bimWorld::ViewerDataModel::onSelectNode(std::vector<void*> nodes, ViewerMod
 	}
 	else
 	{
+		m_selectedNodes.resize(nodes.size());
 		std::copy(nodes.begin(), nodes.end(), m_selectedNodes.begin());
 	}
 }
@@ -58,6 +59,7 @@ std::vector<void*> bimWorld::ViewerDataModel::getSelectedNodes()
 void bimWorld::ViewerDataModel::setSelectedNodes(const std::vector<void*>& nodes)
 {
 	m_selectedNodes.clear();
+	m_selectedNodes.resize(nodes.size());
 	std::copy(nodes.begin(), nodes.end(), m_selectedNodes.begin());
 }
 
@@ -196,7 +198,7 @@ bool bimWorld::ViewerDataModel::getCameraPerspective(bimWorld::CameraPerspective
 	return true;
 }
 
-// <´´½¨Ò»¸ö×î¶¥²ãµÄÏà»ú>
+// <åˆ›å»ºä¸€ä¸ªæœ€é¡¶å±‚çš„ç›¸æœº>
 void bimWorld::ViewerDataModel::createTopMostCamera(osg::Camera* mainCamera)
 {
 	// create a camera to set up the projection and model view matrices, and the subgraph to draw in the HUD
@@ -244,7 +246,7 @@ void bimWorld::ViewerDataModel::createTopMostCamera(osg::Camera* mainCamera)
 }
 
 
-// <´´½¨Ò»¸ö×îµ×²ãµÄÏà»ú>
+// <åˆ›å»ºä¸€ä¸ªæœ€åº•å±‚çš„ç›¸æœº>
 void bimWorld::ViewerDataModel::createBackGroundCamera(osg::Camera* mainCamera)
 {
 	osg::ref_ptr<osg::Camera> camera = new osg::Camera;
@@ -289,7 +291,6 @@ osg::Node* createLightSource(unsigned int num,
 	light->setLightNum(num);
 	light->setDiffuse(color);
 	light->setPosition(osg::Vec4(trans, 0.0f));
-
 	osg::ref_ptr<osg::LightSource> lightSource = new
 		osg::LightSource;
 	lightSource->setLight(light);
@@ -520,7 +521,16 @@ void bimWorld::ViewerDataModel::initOSG(std::function<void(osg::GraphicsContext:
 	createTopMostCamera(camera);
 	//createBackGroundCamera(camera);
 
-	m_mViewer->setSceneData(sceneRoot);
+	//auto mat = m_localViewMat * m_transMat * m_yawMat * m_pitchMat * m_scaleMat;
+	m_scale = new osg::MatrixTransform();
+	m_scale->setMatrix(m_scaleMat);
+	m_scale->addChild(sceneRoot);
+	m_localView = new osg::MatrixTransform();
+	m_localView->setMatrix(m_localViewMat);
+	m_localView->addChild(m_scale);
+
+	//m_mViewer->setSceneData(sceneRoot);
+	m_mViewer->setSceneData(m_localView);
 
 	m_mViewer->setLightingMode(osgViewer::Viewer::LightingMode::SKY_LIGHT);
 
@@ -605,6 +615,22 @@ void bimWorld::ViewerDataModel::initOSG(std::function<void(osg::GraphicsContext:
 	m_sceneRoot->addChild(lightPerson0);
 	m_sceneRoot->addChild(lightPerson1);
 	m_sceneRoot->addChild(lightPerson2);
+
+	m_localViewMat = osg::Matrix::identity();
+
+	m_transVec = osg::Vec3(0, 0, 0);
+	m_transMat = osg::Matrix::translate(m_transVec);
+
+	// Vertical axis rotation.
+	m_yawAngle = 0;
+	//auto m_yawQuat = osg::Quat(m_yawAngle, osg::Vec3d(0, 1, 0));
+	m_yawMat = osg::Matrix::rotate(m_yawAngle, osg::Vec3d(0, 1, 0));
+	// Lateral axis rotation.
+	m_pitchAngle = 0;
+	m_pitchMat = osg::Matrix::rotate(m_pitchAngle, osg::Vec3d(1, 0, 0));
+
+	m_scaleVec = osg::Vec3(1, 1, 1);
+	m_scaleMat = osg::Matrix::scale(m_scaleVec);
 
 	// add sky box.
 	//m_sceneRoot->addChild(m_skyBox);
@@ -693,3 +719,13 @@ void bimWorld::ViewerDataModel::onKeyRelease(int key)
 }
 
 #endif // Android
+
+void bimWorld::ViewerDataModel::setLocalLookAt(const osg::Vec3& eye, const osg::Vec3& center /*= osg::Vec3(0, 0, 0)*/, const osg::Vec3& up /*= osg::Vec3(0, 1, 0)*/)
+{
+	m_localViewMat = osg::Matrix::identity();
+	m_localViewMat.makeLookAt(eye, center, up);
+	m_eye = eye;
+	m_center = center;
+	m_up = up;
+	m_localView->setMatrix(m_localViewMat);
+}
